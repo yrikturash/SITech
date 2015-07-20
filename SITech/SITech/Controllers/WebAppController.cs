@@ -7,7 +7,7 @@ using SITech.Models;
 
 namespace SITech.Controllers
 {
-    public class WebAppController : BaseController
+    public class WebAppController : Controller
     {
         // GET: WebApp
         public ActionResult Index()

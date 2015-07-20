@@ -8,7 +8,7 @@ using SITech.DTO;
 
 namespace SITech.Controllers
 {
-    public class CustomerController : BaseController
+    public class CustomerController : Controller
     {
          UnitOfWork unitOfWork;
 

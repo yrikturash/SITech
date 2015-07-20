@@ -9,7 +9,7 @@ using SITech.Models;
 
 namespace SITech.Controllers
 {
-    public class SharedController : BaseController
+    public class SharedController : Controller
     {
         public ActionResult _SideBar()
         {

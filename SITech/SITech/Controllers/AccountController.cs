@@ -13,7 +13,7 @@ using SITech.DTO;
 namespace SITech.Controllers
 { 
     [Authorize]
-    public class AccountController : BaseController
+    public class AccountController : Controller
     {
         private ApplicationUserManager _userManager;
         private UnitOfWork unitOfWork;

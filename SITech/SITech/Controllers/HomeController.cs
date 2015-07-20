@@ -9,7 +9,7 @@ using SITech.Models;
 
 namespace SITech.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
         public ActionResult Index()
         {

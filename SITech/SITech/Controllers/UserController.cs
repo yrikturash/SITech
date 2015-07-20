@@ -15,7 +15,7 @@ using SITech.DTO;
 namespace SITech.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class UserController : BaseController
+    public class UserController : Controller
     {
        private ApplicationUserManager _userManager;
 

@@ -94,7 +94,7 @@ namespace SITech.Models
     }
 
         public void Create(BeverageInventoryViewModel model)
-    {
+        {
             BeverageInventory inv = new BeverageInventory
             {
                 MenuItemId = model.MenuItemId,
@@ -111,8 +111,8 @@ namespace SITech.Models
         }
 
         public void Update(BeverageInventoryViewModel rate)
-    {
-        db.Entry(rate).State = EntityState.Modified;
+        {
+            db.Entry(rate).State = EntityState.Modified;
 
             db.SaveChanges();
         }

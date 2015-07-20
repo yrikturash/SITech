@@ -8,7 +8,7 @@ using SITech.Models;
 
 namespace SITech.Controllers
 {
-    public class PaymentController : BaseController
+    public class PaymentController : Controller
     {
 
         //

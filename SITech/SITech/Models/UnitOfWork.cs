@@ -12,7 +12,17 @@ namespace SITech.Models
         private InventoryRepository inventoryRepository;
         private AccountRepository accountRepository;
         private BeverageInventoryRepository beverageInventoryRepository;
+        private MenuItemRepository _menuItemRepository;
 
+        public MenuItemRepository MenuItems
+        {
+            get
+            {
+                if (_menuItemRepository == null)
+                    _menuItemRepository = new MenuItemRepository(db);
+                return _menuItemRepository;
+            }
+        }
         public CustomerRepository Customers
         {
             get

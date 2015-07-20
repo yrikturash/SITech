@@ -32,6 +32,22 @@ namespace SITech.Models
             }
             return MenuItemViewModels;
         }
+        public IEnumerable<MenuItemViewModel> GetByItemType(string itemType)
+        {
+            var MenuItemViewModels = new List<MenuItemViewModel>();
+            foreach (var inv in db.MenuItems.Where(item => item.IsActive == true && item.ItemType == itemType))
+            {
+                MenuItemViewModels.Add(new MenuItemViewModel
+                {
+                    MenuItemId = inv.MenuItemId,
+                    CustomerId = inv.CustomerId,
+                    ItemName = inv.ItemName,
+                    ItemPrice = inv.ItemPrice,
+                    ItemType = inv.ItemType
+                });
+            }
+            return MenuItemViewModels;
+        }
 
         public IEnumerable<MenuItemViewModel> GetAll(string customerId)
         {
