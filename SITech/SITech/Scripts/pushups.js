@@ -308,8 +308,7 @@
 
             },
             success: function (data) {
-                menuItems = data;
-                createMenuItem();
+                window.location.href = "/WebApp/MenuItems";
 
             },
             error: function (error) {
