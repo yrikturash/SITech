@@ -1,0 +1,93 @@
+﻿@model SITech.DTO.BeverageInventoryViewModel
+@{
+    ViewBag.Title = "Add New";
+}
+            <div class="modal-header clearfix ">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <i class="pg-close fs-14"></i>
+                </button>
+                <h4 class="p-b-5"><span class="semi-bold">New</span> Beverage Inventory</h4>
+            </div>
+            <div class="modal-body">
+                <p class="small-text">Create a new app using this form, make sure you fill them all</p>
+
+@using (Html.BeginForm("AddBeverageInventory", "WebApp", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group form-group-default">
+                @Html.LabelFor(m => m.ProductName)
+                @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control", placeholder = "Name of your product", required = "required" })
+                @Html.ValidationMessageFor(m => m.ProductName)
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group form-group-default">
+                @Html.LabelFor(m => m.Vendor)
+                @Html.TextBoxFor(m => m.Vendor, new { @class = "form-control", placeholder = "Vendor Name", required = "required" })
+                @Html.ValidationMessageFor(m => m.Vendor)
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group form-group-default">
+                @Html.LabelFor(m => m.Producer)
+                @Html.TextBoxFor(m => m.Producer, new { @class = "form-control", placeholder = "Producer Name", required = "required" })
+                @Html.ValidationMessageFor(m => m.Producer)
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="form-group form-group-default">
+                @Html.LabelFor(m => m.Price)
+                @Html.TextBoxFor(m => m.Price, new { @class = "form-control", placeholder = "Your price", required = "required" })
+                @Html.ValidationMessageFor(m => m.Price)
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group form-group-default">
+                @Html.LabelFor(m => m.Age)
+                @Html.TextBoxFor(m => m.Age, new { @class = "form-control", placeholder = "Age", required = "required" })
+                @Html.ValidationMessageFor(m => m.Age)
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group form-group-default">
+                @Html.LabelFor(m => m.Volume)
+                @Html.TextBoxFor(m => m.Volume, new { @class = "form-control", placeholder = "Volume in oz", required = "required" })
+                @Html.ValidationMessageFor(m => m.Volume)
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group form-group-default">
+                @Html.LabelFor(m => m.DrinkType)
+                @Html.TextBoxFor(m => m.DrinkType, new { @class = "form-control", placeholder = "Type of beverage", required = "required" })
+                @Html.ValidationMessageFor(m => m.DrinkType)
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12" style="align-items:flex-end">
+            <div class="col-sm-4 m-t-10 sm-m-t-10">
+                <button type="button" class="btn btn-default btn-block m-t-5" data-dismiss="modal">Cancel</button>
+            </div>
+                <div class="col-sm-4 m-t-10 sm-m-t-10">
+                    <button type="submit" id="approve-btn" class="btn btn-primary btn-block m-t-5">Save</button>
+                </div>
+            </div>
+    </div>
+}            </div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#approve-btn').click(function () {
+            $('#modal-container').modal('hide');
+        });
+    });
+</script>
+           

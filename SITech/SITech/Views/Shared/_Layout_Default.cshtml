@@ -1,0 +1,57 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="SemiColonWeb" />
+
+    <!-- Stylesheets
+    ============================================= -->
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
+    @Styles.Render("~/default/css")
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <!-- External JavaScripts
+    ============================================= -->
+    <script type="text/javascript" src="/Content/defaultlayout/js/jquery.js"></script>
+    <script type="text/javascript" src="/Content/defaultlayout/js/plugins.js"></script>
+
+    <!-- Document Title
+    ============================================= -->
+    <title>Home - Full Screen Image | Canvas</title>
+
+</head>
+
+<body class="stretched">
+
+    <!-- Document Wrapper
+    ============================================= -->
+    <div id="wrapper" class="clearfix">
+
+        <!-- Header -->
+        @Html.Partial("_DefaultHeader")
+
+        <!-- #header end -->
+
+        @RenderBody()
+
+
+        <!-- Footer-->
+        @Html.Partial("_DefaultFooter")
+        <!-- #footer end -->
+
+    </div><!-- #wrapper end -->
+
+    <!-- Go To Top
+    ============================================= -->
+    <div id="gotoTop" class="icon-angle-up"></div>
+
+    <!-- Footer Scripts
+    ============================================= -->
+    <script type="text/javascript" src="/Content/defaultlayout/js/functions.js"></script>
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

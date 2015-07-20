@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "View";
+}
+
+@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+  <h2> logged in</h2>
+}
+else
+{
+    <h2>Not Logged In</h2>
+}
+
+

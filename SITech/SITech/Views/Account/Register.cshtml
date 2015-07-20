@@ -1,0 +1,72 @@
+﻿@model SITech.DTO.CustomerViewModel
+@{
+    ViewBag.Title = "Register";
+    Layout = "../Shared/_Layout_Default.cshtml";
+}
+<section id="content">
+
+    <div class="content-wrap">
+
+        <div class="container clearfix">
+
+            <div class="tabs divcenter nobottommargin clearfix" id="tab-login-register" style="max-width: 500px;">
+
+                <div class="tab-content clearfix" id="tab-login">
+                    <div class="panel panel-default nobottommargin">
+                        <div class="panel-body" style="padding: 40px;">
+                            <h3>Register for an Account</h3>
+
+                            <form id="register-form" name="register-form" class="nobottommargin" action="Register" method="post">
+                                @Html.AntiForgeryToken()
+                                <div class="col_full">
+                                    @Html.LabelFor(m => m.UserName)
+                                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control",  placeholder = "" })
+                                    @Html.ValidationMessageFor(m => m.UserName)
+                                </div>
+
+                                <div class="col_full">
+                                    @Html.LabelFor(m => m.FirstName)
+                                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control",  placeholder = "" })
+                                    @Html.ValidationMessageFor(m => m.FirstName)
+                                </div>
+                                <div class="col_full">
+                                    @Html.LabelFor(m => m.MiddleName)
+                                    @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control",  placeholder = "" })
+                                </div>
+                                <div class="col_full">
+                                    @Html.LabelFor(m => m.LastName)
+                                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control",  placeholder = "" })
+                                    @Html.ValidationMessageFor(m => m.LastName)
+                                </div>
+                                <div class="col_full">
+                                    @Html.LabelFor(m => m.Email)
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control",  placeholder = "" })
+                                    @Html.ValidationMessageFor(m => m.Email)
+                                </div>
+                                <div class="col_full">
+                                    @Html.LabelFor(m => m.Password)
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control",  placeholder = "" })
+                                    @Html.ValidationMessageFor(m => m.Password)
+                                </div>
+                                <div class="col_full">
+                                    @Html.LabelFor(m => m.ConfirmPassword)
+                                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control",  placeholder = "" })
+                                    @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                                </div>
+
+                                <div class="col_full nobottommargin">
+                                    <button class="button button-3d button-black nomargin" id="register-form-submit" name="register-form-submit" value="register">Register Now</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            </div>
+
+        </div>
+    
+</section>

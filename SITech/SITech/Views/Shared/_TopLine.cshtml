@@ -1,0 +1,96 @@
+﻿@using SITech.Models
+ <!-- TOP BAR -->
+<div class="top-bar">
+    <div class="container">
+        <div class="row">
+            <!-- logo -->
+            <div class="col-md-2 logo">
+                <a href="/Home/Index"><img src="/Content/assets/img/kingadmin-logo-white.png" alt="KingAdmin - Admin Dashboard" /></a>
+                <h1 class="sr-only">KingAdmin Admin Dashboard</h1>
+            </div>
+            <!-- end logo -->
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-3">
+                        <!-- search box -->
+                        @*<div id="tour-searchbox" class="input-group searchbox">
+                                <input type="search" class="form-control" placeholder="enter keyword here...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>*@
+                        <!-- end search box -->
+                    </div>
+                    <div class="col-md-9">
+                        <div class="top-bar-right">
+                            <!-- responsive menu bar icon -->
+                            <a href="#" class="hidden-md hidden-lg main-nav-toggle"><i class="fa fa-bars"></i></a>
+                            <!-- end responsive menu bar icon -->
+                            @*<button type="button" id="start-tour" class="btn btn-link"><i class="fa fa-refresh"></i> Start Tour</button>
+                                <button type="button" id="global-volume" class="btn btn-link btn-global-volume"><i class="fa"></i></button>*@
+                            <div class="notifications">
+                                <ul>
+                                    <!-- notification: inbox -->
+                                    <!-- end notification: inbox -->
+                                    <!-- notification: general -->
+                                    <!-- end notification: general -->
+                                </ul>
+                            </div>
+                            @{
+                                var customer = new ApplicationDbContext().Customers.FirstOrDefault(u => u.User.UserName == User.Identity.Name);
+                            }
+                            <!-- logged user and the menu -->
+                            <div class="logged-user">
+                                <div class="btn-group">
+                                    <a href="#" class="btn btn-link dropdown-toggle" style="margin-right:30px;" data-toggle="dropdown">
+                                                                   
+                                        @*<img src="/Content/assets/img/user-avatar.png" alt="User Avatar" />*@                                       
+                                        <span class="name"></span>@User.Identity.Name<span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        @*<li>
+                                            <a href="#">
+                                                <i class="fa fa-user"></i>
+                                                <span class="text">Profile</span>
+                                            </a>
+                                        </li>*@
+                                        <li>
+                                            <a href="/Account/Manage">
+                                                <i class="fa fa-user"></i>
+                                                <span class="text">Manage</span>
+                                            </a>
+                                        </li>                                     
+                                        @*<li>
+                                            <a href="#">
+                                                <i class="fa fa-cog"></i>
+                                                <span class="text">Settings</span>
+                                            </a>
+                                        </li>*@
+                                        <li>
+                                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                                {
+                                                    @Html.AntiForgeryToken()
+                                                    <i class="fa fa-power-off" style="padding-left: 8px;"></i>
+                                                    <a href="javascript:document.getElementById('logoutForm').submit()" class="text"> Logout</a>
+                                                }
+                                            @*<a href="#">
+                                                <i class="fa fa-power-off"></i>
+                                                <span class="text">Logout</span>
+                                            </a>*@
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- end logged user and the menu -->
+                        </div>
+                        <!-- /top-bar-right -->
+                    </div>
+                </div>
+                <!-- /row -->
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /top -->

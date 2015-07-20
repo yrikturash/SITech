@@ -1,0 +1,128 @@
+﻿@model IEnumerable<SITech.DTO.BeverageInventoryViewModel>
+
+@{
+    ViewBag.Title = "Beverage Inventories";
+}
+
+@if (Request.IsAuthenticated)
+{
+
+    <!-- START PANEL -->
+    <div class="panel panel-transparent">
+        <div class="panel-heading">
+            <div class="panel-title">
+                Beverage Inventories
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        @using (Html.BeginForm("BeverageInventories", "WebApp", FormMethod.Post, new { @id = "frm" }))
+        {
+            <div class="row">
+                <div class="col-md-12" style="margin-top: 20px;">
+                    <!-- COLUMN FILTER DATA TABLE -->
+                    <div class="widget widget-table">
+                        <div class="widget-content">
+                            <table id="datatable-column-filter" class="table table-sorting table-striped table-hover datatable">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 15px;"></th>
+                                        <th>ProductName</th>
+                                        <th>Vendor</th>
+                                        <th>Producer</th>
+                                        <th>Price</th>
+                                        <th>Age</th>
+                                        <th>Volume</th>
+                                        <th>DrinkType</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td><input type="checkbox" class="itemCheckbox" data-code="@item.Id" name="selectedItems" value="@item.Id" /></td>
+                                            <td>@item.ProductName</td>
+                                            <td>@item.Vendor</td>
+                                            <td>@item.Producer</td>
+                                            <td>@item.Price</td>
+                                            <td>@item.Age</td>
+                                            <td>@item.Volume</td>
+                                            <td>@item.DrinkType</td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- END COLUMN FILTER DATA TABLE -->
+                </div>
+            </div>
+
+            <div class="row" style="margin-left: 5px;">
+                <a type="button" class="btn btn-default" href="/WebApp/AddBeverageInventory">Add</a>
+                <input type="button" class="btn btn-default" value="Delete" id="delete_customer" />
+                <input type="button" class="btn btn-default" value="Save" />
+            </div>
+        }
+    </div>
+            <!-- END PANEL -->
+}
+else
+{
+    <h2> Logged off and now in the other view</h2>
+}
+
+<script>
+    $(function () {
+        addColumnFiltersDataTable(12, 1);
+        $('.row-filter th:first').empty().append('<input type="checkbox" id="check_all" />');
+        $('th:first').attr("class", "");
+    });
+
+    /*--------------------------- Check/Uncheck all ----------------------------------------*/
+    $("body").on("click", "#check_all", function () {
+        if ($('#check_all').is(":checked")) {
+            $('.itemCheckbox').prop("checked", true);
+        } else {
+            $('.itemCheckbox').prop("checked", false);
+        }
+    });
+    /*--------------------------- Validation ----------------------------------------*/
+    $("body").on("submit", "#frm", function () {
+        if ($('.itemCheckbox:checked').length <= 0) {
+            alert('Select at least one customer!');
+            return false;
+        }
+    });
+    /*--------------------------- Delete customer account ----------------------------------------*/
+    $("body").on("click", "#delete_customer", function () {
+        if (confirm("Are you sure?")) {
+            var customerCodesList = [];
+            $(".itemCheckbox:checked").each(function () {
+                customerCodesList.push(this.value);
+            });
+
+
+            $.ajax({
+                url: '/WebApp/DeleteBeverageInventory',
+                data: { "customerCodesList": customerCodesList },
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                complete: function () {
+
+                },
+                success: function (data) {
+                    $(".itemCheckbox:checked").each(function () {
+                        this.closest('tr').remove();
+                    });
+                },
+                error: function (error) {
+                    Console.log(error);
+                }
+            });
+        }
+
+    });
+</script>
+
+

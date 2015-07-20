@@ -1,0 +1,68 @@
+﻿@model SITech.DTO.MenuItemViewModel
+@{
+    ViewBag.Title = "Add New";
+}
+<div class="modal-header clearfix ">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        <i class="pg-close fs-14"></i>
+    </button>
+    <h4 class="p-b-5"><span class="semi-bold">New</span> Menu Item</h4>
+</div>
+<div class="modal-body">
+    <p class="small-text">Create a new app using this form, make sure you fill them all</p>
+
+    @using (Html.BeginForm("AddMenuItem", "WebApp", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group form-group-default">
+                    @Html.LabelFor(m => m.ItemPrice)
+                    @Html.TextBoxFor(m => m.ItemPrice, new { @class = "form-control", placeholder = "Price", required = "required" })
+                    @Html.ValidationMessageFor(m => m.ItemPrice)
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group form-group-default">
+                    @Html.LabelFor(m => m.ItemName)
+                    @Html.TextBoxFor(m => m.ItemName, new { @class = "form-control", placeholder = "Name", required = "required" })
+                    @Html.ValidationMessageFor(m => m.ItemName)
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group form-group-default">
+                    @Html.LabelFor(m => m.ItemType)
+                    <div class="col-sm-4" style="margin: 4px; padding: 4px">
+                        <select class="cs-select cs-skin-slide" data-init-plugin="cs-select" id="ItemType" name="ItemType">
+                            <option value="Beverage Inventory">Beverage Inventory</option>
+                            <option value="Inventory">Inventory</option>
+                            <option value="Food">Food</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12" style="align-items:flex-end">
+                <div class="col-sm-4 m-t-10 sm-m-t-10">
+                    <button type="button" class="btn btn-default btn-block m-t-5" data-dismiss="modal">Cancel</button>
+                </div>
+                <div class="col-sm-4 m-t-10 sm-m-t-10">
+                    <button type="submit" id="approve-btn" class="btn btn-primary btn-block m-t-5">Save</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#approve-btn').click(function () {
+            $('#modal-container').modal('hide');
+        });
+    });
+</script>

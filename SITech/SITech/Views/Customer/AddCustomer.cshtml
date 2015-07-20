@@ -1,0 +1,209 @@
+﻿@model SITech.DTO.CustomerViewModel
+@{
+    ViewBag.Title = "Add New";
+}
+@section Scripts {
+    @*Scripts.Render("~/bundles/jquery");*@
+    @Scripts.Render("~/bundles/jqueryval")
+    @*@Scripts.Render("~/Scripts/bootstrap")*@
+<script>
+    var loadFile = function (event) {
+        var output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+    };
+</script>
+}
+<div class="main-content">
+    <div class="row">
+        <div class="col-md-6">
+            <!-- REGISTRATION FORM WITH ICONS -->
+            <div class="widget">
+                <div class="widget-header">
+                    <h3><i class="fa fa-edit"></i> Create Customer</h3>
+                </div>
+                <div class="widget-content">
+                   
+                    @using (Html.BeginForm("AddCustomer", "Customer", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                    {                                                  
+                        @Html.AntiForgeryToken()
+                       <p class="title">Upload logo:</p>
+                        @*<hr />*@
+                        @Html.ValidationSummary(true)
+                        //user info
+                        <div class="form-group" style="margin:0 auto;display:table">                       
+                            <img id="output" width="100" height="100" src="/Content/assets/img/defaultAvatar.png" class="img-avatar" />                           
+                            <br />
+                            <div>
+                                <input type="file" accept="image/*" onchange="loadFile(event)" name="file">
+                            </div>
+                            <br />
+                        </div>
+                        //control-label sr-only : hide label style; col-sm-12 for div textbox
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.UserName, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "user name"})
+                                @Html.ValidationMessageFor(model => model.UserName, null, new { @class = "help-block red" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.FirstName, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = "first name" })
+                                @Html.ValidationMessageFor(model => model.FirstName, null, new { @class = "help-block red" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.MiddleName, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control", @placeholder = "middle name" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.LastName, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @placeholder = "last name" })
+                                @Html.ValidationMessageFor(model => model.LastName, null, new { @class = "help-block red" })
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Email, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", autocomplete = "off", @placeholder = "email address" })
+                                @Html.ValidationMessageFor(model => model.Email, null, new { @class = "help-block red" })
+                            </div>
+                        </div>
+                        //company
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.CompanyName, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control", @placeholder = "company name" })
+                                @Html.ValidationMessageFor(model => model.CompanyName, null, new { @class = "help-block red" })
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                            @Html.LabelFor(m => m.RoleName, new { @class = "col-md-2 control-label" })
+                            <div class="col-sm-12">
+                                @Html.DropDownListFor(m => m.RoleName, Model.Roles, new { @class = "form-control" })
+                            </div>
+                        </div>*@
+                        @Html.HiddenFor(m => m.RoleName)
+                        //address
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.CountryName, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(m => m.CountryName, Model.Countries, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Street, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.Street, new { @class = "form-control", @placeholder = "street" })
+                                @Html.ValidationMessageFor(model => model.Street, null, new { @class = "help-block red" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Zip, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.Zip, new { @class = "form-control", @placeholder = "zip" })
+                                @Html.ValidationMessageFor(model => model.Zip, null, new { @class = "help-block red" })
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.CargoType, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.EnumDropDownListFor(model => model.CargoType, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        //digits
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.YearlyImports, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.YearlyImports, new { @class = "form-control", @placeholder = "yearly imports" })
+                                @Html.ValidationMessageFor(model => model.YearlyImports, null, new { @class = "help-block red" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.YearlyExports, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.YearlyExports, new { @class = "form-control", @placeholder = "yearly exports" })
+                                @Html.ValidationMessageFor(model => model.YearlyExports, null, new { @class = "help-block red" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.LastYearsExpendituresOnImports, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.LastYearsExpendituresOnImports, new { @class = "form-control", @placeholder = "last year on imports" })
+                                @Html.ValidationMessageFor(model => model.LastYearsExpendituresOnImports, null, new { @class = "help-block red" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.LastYearsExpendituresOnExports, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.LastYearsExpendituresOnExports, new { @class = "form-control", @placeholder = "last year on exports" })
+                                @Html.ValidationMessageFor(model => model.LastYearsExpendituresOnExports, null, new { @class = "help-block red" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.AnnualRevenues, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(m => m.AnnualRevenues, new { @class = "form-control", @placeholder = "annual revenues" })
+                                @Html.ValidationMessageFor(model => model.AnnualRevenues, null, new { @class = "help-block red" })
+                            </div>
+                        </div>
+                        //password
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Password, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "password" })
+                                @Html.ValidationMessageFor(model => model.Password, null, new { @class = "help-block red" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8">
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "confirm password" })
+                                @Html.ValidationMessageFor(model => model.ConfirmPassword, null, new { @class = "help-block red" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-check-circle"></i> Create</button>
+                                @if (!Request.Url.ToString().Contains("active=true"))
+                                {
+                                    @Html.ActionLink("Cancel", "PDPs", "Customer", null, new { @class = "btn btn-primary" })
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("Cancel", "Customers", "Customer", null, new { @class = "btn btn-primary" })
+                                }
+                                
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+            <!-- END REGISTRATION FORM WITH ICONS -->
+        </div>
+    </div>
+</div>
+<style>
+    .img-avatar {
+        margin: 0 auto;
+        display: table;
+        border-radius: 30px;
+    }
+    .red {
+        color: #DB3833;
+        font-size: 0.9em;
+        margin-top: 3px;
+    }
+</style>

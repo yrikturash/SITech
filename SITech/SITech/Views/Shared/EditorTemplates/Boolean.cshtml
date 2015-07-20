@@ -1,0 +1,46 @@
+@using SITech.Utility
+@model Boolean?
+
+@{
+    var htmlAttributes = new RouteValueDictionary();
+    if (ViewBag.@class != null)
+    {
+        htmlAttributes.Add("class", ViewBag.@class);
+    }
+}
+
+
+@*<div class="form-group@(Html.ValidationErrorFor(m => m, "has-error"))">
+    @Html.CheckBox(
+            "",
+                    Model.HasValue && Model.Value, new { @class = "col-md-2 control-label" }
+            )    
+    <div class="col-md-10">
+        <div class="controls">
+           @Html.LabelFor(m => m, htmlAttributes)
+            @Html.ValidationMessageFor(m => m, null, new { @class = "help-block" })
+        </div>
+    </div>
+    </div>*@
+
+@*Default:*@
+<div class="form-group@(Html.ValidationErrorFor(m => m, " has-error"))">
+    @Html.LabelFor(m => m, new { @class = "col-md-2 control-label" })
+    <div class="col-md-10">
+        <div class="controls">
+            @Html.CheckBox(
+            "",
+            Model.HasValue && Model.Value,
+                     htmlAttributes: new { @class = "control-label checker" })
+            @Html.ValidationMessageFor(m => m, null, new { @class = "help-block" })
+        </div>
+    </div>
+</div>
+
+<style>
+    .checker {
+        height: 20px;
+        width: 20px;
+        margin-top: 7px;
+    }
+</style>

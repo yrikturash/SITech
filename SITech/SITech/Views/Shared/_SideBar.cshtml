@@ -1,0 +1,49 @@
+﻿@model IEnumerable<SITech.DTO.MenuItemViewModel>
+
+<!-- START SIDEBAR MENU -->
+<div class="sidebar-menu">
+    <!-- BEGIN SIDEBAR MENU ITEMS-->
+    <ul class="menu-items">
+        <li class="m-t-30 ">
+            <a href="#" class="detailed">
+                <span class="title">Dashboard</span>
+                <span class="details">12 New Updates</span>
+            </a>
+            <span class="icon-thumbnail bg-success"><i class="pg-home"></i></span>
+        </li>
+        <li class="">
+            <a href="javascript:;">
+                <span class="title">Menu</span>
+                <span class=" arrow"></span>
+            </a>
+            <span class="icon-thumbnail"><i class="pg-tables"></i></span>
+            <ul class="sub-menu">
+                <li class="">
+                    @*<a href="/WebApp/AddMenuItem" id="create_menu_item">Create</a>*@
+                    <a href="#" id="create_menu_item">Create</a>
+                </li>
+                <li class="">
+                    <a href="/WebApp/MenuItems">Active</a>
+                </li>
+                <li class="">
+                    <a href="/WebApp/UnactiveMenuItems">Unactive</a>
+                </li>
+            </ul>
+        </li>
+        <li class="">
+            <a href="/WebApp/BeverageInventories">
+                <span class="title">Beverages</span>
+            </a>
+
+            <span class="icon-thumbnail"><i class="pg-tables"></i></span>
+        </li>
+        <li class="">
+            <a href="/WebApp/Inventories">
+                <span class="title">Inventories</span>
+            </a>
+            <span class="icon-thumbnail"><i class="pg-tables"></i></span>
+        </li>
+    </ul>
+    <div class="clearfix"></div>
+</div>
+<!-- END SIDEBAR MENU -->
