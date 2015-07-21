@@ -51,6 +51,8 @@ namespace SITech.Models
         public string ItemName { get; set; }
         public string ItemType { get; set; }
         public double ItemPrice { get; set; }
+        public double MenuPrice { get; set; }
+        public double Profit { get; set; }
         public string CustomerId { get; set; }
         public bool IsActive { get; set; }
 
