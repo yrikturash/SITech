@@ -34,10 +34,10 @@
                                         <tr>
                                             <td><input type="checkbox" class="itemCheckbox" data-code="@item.MenuItemId" name="selectedItems" value="@item.MenuItemId" /></td>
                                             <td>@item.ItemName</td>
-                                            <td>@item.ItemPrice.ToString("#,##0.00")</td>
+                                            <td>$@item.ItemPrice.ToString("#,##0.00")</td>
                                             <td>@item.ItemType</td>
-                                            <td>@item.MenuPrice.ToString("#,##0.00")</td>
-                                            <td>@item.Profit</td>
+                                            <td>$@item.MenuPrice.ToString("#,##0.00")</td>
+                                            <td>@item.Profit%</td>
                                         </tr>
                                     }
 
@@ -50,8 +50,9 @@
             </div>
 
             <div class="row" style="margin-left: 5px;">
-                <input type="button" class="btn btn-default" value="Deactivate" id="delete_customer" />
+                <input type="button" class="btn btn-default" value="Deactivate" id="deactivate_menu_item" />
                 <input type="button" class="btn btn-default" value="Edit" id="edit_menu_item" />
+                <input type="button" class="btn btn-default" value="Delete" id="delete_menu_item" />
             </div>
         }
     </div>
@@ -84,30 +85,51 @@ else
             return false;
         }
     });
-    /*--------------------------- Delete customer account ----------------------------------------*/
-    $("body").on("click", "#delete_customer", function () {
+    /*--------------------------- delete menu items ----------------------------------------*/
+    $("body").on("click", "#delete_menu_item", function () {
         if (confirm("Are you sure?")) {
             var menuItemList = [];
             $(".itemCheckbox:checked").each(function () {
                 menuItemList.push(this.value);
             });
 
-
+            //console.log(menuItemList);
             $.ajax({
-                url: '/WebApp/DeactivateMenuItems',
-                data: { "menuItemList": menuItemList },
-                type: 'POST',
-                contentType: 'application/json; charset=utf-8',
-                complete: function () {
-
-                },
-                success: function (data) {
+                url: '/api/menuitem/delete?ids='+menuItemList.join(","),
+                type: 'delete',
+                //data: { 'ids': menuItemList },
+                success: function (result) {
                     $(".itemCheckbox:checked").each(function () {
                         this.closest('tr').remove();
                     });
                 },
                 error: function (error) {
-                    Console.log(error);
+                    console.log(error);
+                }
+            });
+        }
+
+    });
+    /*--------------------------- Deactivate menu item ----------------------------------------*/
+    $("body").on("click", "#deactivate_menu_item", function () {
+        if (confirm("Are you sure?")) {
+            var menuItemList = [];
+            $(".itemCheckbox:checked").each(function () {
+                menuItemList.push(this.value);
+            });
+
+            //console.log(menuItemList);
+            $.ajax({
+                url: '/api/menuitem/deactivate',
+                type: 'get',
+                data: { 'menuItemList': menuItemList },
+                success: function (result) {
+                    $(".itemCheckbox:checked").each(function () {
+                        this.closest('tr').remove();
+                    });
+                },
+                error: function (error) {
+                    console.log(error);
                 }
             });
         }

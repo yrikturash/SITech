@@ -36,6 +36,41 @@ namespace SITech.ApiControllers
             }
         }
 
+        [System.Web.Http.HttpDelete]
+        [System.Web.Http.Route("delete")]
+        public HttpResponseMessage DeleteMenuItem(int id)
+        {
+            try
+            {
+                _unitOfWork.MenuItems.Delete(id);
+                return Request.CreateResponse(HttpStatusCode.OK);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+        [System.Web.Http.HttpDelete]
+        [System.Web.Http.Route("delete")]
+        public HttpResponseMessage DeleteMenuItem([FromUri] List<int> ids)
+        {
+            try
+            {
+                foreach (var id in ids)
+                {
+                    _unitOfWork.MenuItems.Delete(Convert.ToInt32(id));
+                }
+                return Request.CreateResponse(HttpStatusCode.OK);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
         [System.Web.Http.HttpPut]
         [System.Web.Http.Route("put")]
         public HttpResponseMessage UpdateMenuItem(MenuItemViewModel item)
@@ -44,6 +79,27 @@ namespace SITech.ApiControllers
             {
                 _unitOfWork.MenuItems.Update(item);
                 _unitOfWork.Save();
+                return Request.CreateResponse(HttpStatusCode.OK);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+
+
+        [HttpGet]
+        [System.Web.Http.Route("deactivate")]
+        public HttpResponseMessage DectivateMenuItems([FromUri] List<string> menuItemList)
+        {
+            try
+            {
+                foreach (var menuItem in menuItemList)
+                {
+                    _unitOfWork.MenuItems.DeActivate(Convert.ToInt32(menuItem));
+                }
                 return Request.CreateResponse(HttpStatusCode.OK);
 
             }

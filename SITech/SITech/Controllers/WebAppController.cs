@@ -99,6 +99,7 @@ namespace SITech.Controllers
             }
         }
 
+        [HttpPost]
         public void DectivateMenuItems(List<string> menuItemList)
         {
             MenuItemRepository menuItemRepository = new MenuItemRepository(new ApplicationDbContext());
