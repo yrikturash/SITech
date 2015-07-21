@@ -26,12 +26,12 @@ namespace SITech.ApiControllers
         {
             try
             {
-
+                var customerId = User.Identity.GetUserId();
 
                 return Request.CreateResponse(HttpStatusCode.OK,
                     new
                     {
-                        BeverageList = _unitOfWork.MenuItems.GetByItemType("Beverage Inventory"),
+                        BeverageList = _unitOfWork.MenuItems.GetByItemType("Beverage Inventory", customerId),
                         InventoryList = _unitOfWork.MenuItems.GetByItemType("Food")
                     });
 
@@ -44,7 +44,7 @@ namespace SITech.ApiControllers
 
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("addMenuItem")]
-        public HttpResponseMessage AddMenuItem(string name, float price, string type)
+        public HttpResponseMessage AddMenuItem(string name, float price, double menuPrice, double profit, string type)
         {
             try
             {
@@ -55,7 +55,9 @@ namespace SITech.ApiControllers
                     CustomerId = User.Identity.GetUserId(),
                     ItemName = name,
                     ItemPrice = price,
-                    ItemType = type
+                    ItemType = type,
+                    Profit = profit,
+                    MenuPrice = menuPrice
                 };
                 _unitOfWork.MenuItems.Create(menuItem);
                 return Request.CreateResponse(HttpStatusCode.OK);

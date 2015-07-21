@@ -6,6 +6,7 @@ var inventoryItemName = null;
 var currentMenuItemMeasure = null;
 var profitValue = null;
 var menuPrice = null;
+var price = null;
 
 //list of selected items
 var selectedMenuItemsList = [];
@@ -273,6 +274,9 @@ var enterMenuPrice = function () {
     //round to one digit after comma
     resultPrice = Math.round(resultPrice * 10) / 10;
 
+    price = resultPrice;
+
+
     bootbox.dialog({
         title: "Enter Menu Price",
         message: '<div class="row">  ' +
@@ -303,7 +307,7 @@ var addMenuItem = function () {
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/api/pushups/addMenuItem?name=' + menuItemName + '&price=' + menuPrice + '&type=' + type,
+        url: '/api/pushups/addMenuItem?name=' + menuItemName + '&price=' + price + '&type=' + type + '&menuPrice=' + menuPrice + '&profit=' + profitValue,
         //data: { 'id': id },
         contentType: 'application/json; charset=utf-8',
         complete: function () {
@@ -311,7 +315,7 @@ var addMenuItem = function () {
 
         },
         success: function (data) {
-            window.location.href = "/WebApp/MenuItems";
+            window.location.reload();
 
         },
         error: function (error) {
@@ -373,7 +377,7 @@ var editMenuItemPopup = function (data) {
             '</form> </div>  </div>',
         buttons: {
             success: {
-                label: "Add",
+                label: "Save",
                 className: "btn-success",
                 callback: function () {
                     data.MenuPrice = $('#menu_price').val();
