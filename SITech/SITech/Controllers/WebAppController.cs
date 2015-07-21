@@ -9,6 +9,13 @@ namespace SITech.Controllers
 {
     public class WebAppController : Controller
     {
+        private readonly UnitOfWork _unitOfWorks;
+
+        public WebAppController()
+        {
+            _unitOfWorks = new UnitOfWork();
+        }
+
         // GET: WebApp
         public ActionResult Index()
         {
@@ -21,11 +28,13 @@ namespace SITech.Controllers
             MenuItemRepository inventoryRepository = new MenuItemRepository(new ApplicationDbContext());
             string customerId = null;
             var firstOrDefault = new ApplicationDbContext().Users.FirstOrDefault(cus => cus.UserName == User.Identity.Name);
+
+
             if (firstOrDefault !=
                 null)
             {
                 customerId = firstOrDefault.Id;
-                model = inventoryRepository.GetAll(customerId);
+                model = _unitOfWorks.MenuItems.GetAllByCustomerId(customerId);
                 return View(model);
             }
 

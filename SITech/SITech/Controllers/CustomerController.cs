@@ -29,8 +29,8 @@ namespace SITech.Controllers
         //
         // GET: /PDP/All
         public ActionResult PDPs()
-        {          
-           return View(unitOfWork.Customers.GetAll(false));
+        {
+            return View(unitOfWork.Customers.GetAll(false));
         }
 
 

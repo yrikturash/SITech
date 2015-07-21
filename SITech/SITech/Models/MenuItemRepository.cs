@@ -29,7 +29,8 @@ namespace SITech.Models
                     ItemPrice = inv.ItemPrice,
                     ItemType = inv.ItemType,
                     MenuPrice = inv.MenuPrice,
-                    Profit = inv.Profit
+                    Profit = inv.Profit,
+                    IsActive = inv.IsActive
                 });
             }
             return MenuItemViewModels;
@@ -47,7 +48,27 @@ namespace SITech.Models
                     ItemPrice = inv.ItemPrice,
                     ItemType = inv.ItemType,
                     MenuPrice = inv.MenuPrice,
-                    Profit = inv.Profit
+                    Profit = inv.Profit,
+                    IsActive = inv.IsActive
+                });
+            }
+            return MenuItemViewModels;
+        }
+        public IEnumerable<MenuItemViewModel> GetAllByCustomerId(string customerId)
+        {
+            var MenuItemViewModels = new List<MenuItemViewModel>();
+            foreach (var inv in db.MenuItems.Where(item => item.IsActive == true && item.CustomerId == customerId))
+            {
+                MenuItemViewModels.Add(new MenuItemViewModel
+                {
+                    MenuItemId = inv.MenuItemId,
+                    CustomerId = inv.CustomerId,
+                    ItemName = inv.ItemName,
+                    ItemPrice = inv.ItemPrice,
+                    ItemType = inv.ItemType,
+                    MenuPrice = inv.MenuPrice,
+                    Profit = inv.Profit,
+                    IsActive = inv.IsActive
                 });
             }
             return MenuItemViewModels;
@@ -66,7 +87,8 @@ namespace SITech.Models
                     ItemPrice = inv.ItemPrice,
                     ItemType = inv.ItemType,
                     MenuPrice = inv.MenuPrice,
-                    Profit = inv.Profit
+                    Profit = inv.Profit,
+                    IsActive = inv.IsActive
                 });
             }
             return menuItemViewModels;
@@ -85,7 +107,8 @@ namespace SITech.Models
                     ItemPrice = inv.ItemPrice,
                     ItemType = inv.ItemType,
                     MenuPrice = inv.MenuPrice,
-                    Profit = inv.Profit
+                    Profit = inv.Profit,
+                    IsActive = inv.IsActive
                 });
             }
             return MenuItemViewModels;
@@ -104,7 +127,8 @@ namespace SITech.Models
                     ItemPrice = inv.ItemPrice,
                     ItemType = inv.ItemType,
                     MenuPrice = inv.MenuPrice,
-                    Profit = inv.Profit
+                    Profit = inv.Profit,
+                    IsActive = inv.IsActive
                 };
             }
             return null;
@@ -131,7 +155,18 @@ namespace SITech.Models
 
         public void Update(MenuItemViewModel rate)
         {
-            db.Entry(rate).State = EntityState.Modified;
+            var item = new MenuItem()
+            {
+                MenuItemId = rate.MenuItemId,
+                CustomerId = rate.CustomerId,
+                ItemName = rate.ItemName,
+                ItemPrice = rate.ItemPrice,
+                ItemType = rate.ItemType,
+                IsActive = rate.IsActive,
+                MenuPrice = rate.MenuPrice,
+                Profit = rate.Profit
+            };
+            db.Entry(item).State = EntityState.Modified;
 
             db.SaveChanges();
         }

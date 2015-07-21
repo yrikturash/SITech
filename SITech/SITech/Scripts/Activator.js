@@ -48,7 +48,6 @@ $("body").on("click", ".activebtn", function () {
     var rolename = $(this).attr('rolename');
         var tr = $(this).parents('tr:first');
 
-
         $.ajax({
             url: '/Customer/Activate/',
             data: { UserId: itemid, RoleName: rolename },
