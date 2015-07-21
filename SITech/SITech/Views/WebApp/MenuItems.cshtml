@@ -5,8 +5,9 @@
     <div class="panel panel-transparent">
         <div class="panel-heading">
             <div class="panel-title">
-                Menu Items
+                Active Menu
             </div>
+            <a class="btn btn-default" style="margin-left: 25px; opacity: 1;" href="#" id="create_menu_item">Add New Menu Item</a>
             <div class="clearfix"></div>
         </div>
         @using (Html.BeginForm("MenuItems", "WebApp", FormMethod.Post, new { @id = "frm" }))
@@ -46,6 +47,7 @@
 
             <div class="row" style="margin-left: 5px;">
                 <input type="button" class="btn btn-default" value="Deactivate" id="delete_customer" />
+                <input type="button" class="btn btn-default" value="Edit" id="edit_menu_item" />
             </div>
         }
     </div>
@@ -58,7 +60,7 @@ else
 
 <script>
     $(function () {
-        addColumnFiltersDataTable(12, 1);
+        addColumnFiltersDataTable("#datatable-column-filter", 4, 1);
         $('.row-filter th:first').empty().append('<input type="checkbox" id="check_all" />');
         $('th:first').attr("class", "");
     });

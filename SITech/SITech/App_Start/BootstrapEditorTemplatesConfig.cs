@@ -46,7 +46,7 @@ namespace SITech
 
             bundles.Add(new ScriptBundle("~/assets/js").Include(
                 "~/Content/assets/plugins/pace/pace.min.js",
-                "~/Content/assets/plugins/jquery/jquery-2.1.0.min.js",
+                //"~/Content/assets/plugins/jquery/jquery-2.1.0.min.js",
                 "~/Content/assets/plugins/modernizr.custom.js",
                 "~/Content/assets/plugins/jquery-ui/jquery-ui.min.js",
                 "~/Content/assets/plugins/boostrapv3/js/bootstrap.min.js",

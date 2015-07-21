@@ -222,6 +222,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiControllers\MenuItemController.cs" />
     <Compile Include="ApiControllers\PushUpController.cs" />
     <Compile Include="App_Start\BootstrapEditorTemplatesConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -1532,6 +1533,7 @@
     <Content Include="Content\pages\sass\themes\retro\var.scss" />
     <Content Include="Content\pages\sass\themes\simple\theme.scss" />
     <Content Include="Content\pages\sass\themes\simple\var.scss" />
+    <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Properties\PublishProfiles\Maatey.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\Activator.js" />
