@@ -1,7 +1,6 @@
 ﻿@using System.Collections
 @using SITech.DTO
 <!DOCTYPE html>
-assets/
 <html>
     <head>
         <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
@@ -21,6 +20,8 @@ assets/
         @Styles.Render("~/bundles/css")
         @Styles.Render("~/assets/css")
         @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/bundles/jquery")
+
 
         <style>
             .modal-content {
@@ -1601,7 +1602,6 @@ assets/
     </div>
     <!-- END OVERLAY -->
     <!-- BEGIN VENDOR JS -->
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/assets/js")
     @Scripts.Render("~/bundles/bootbox")
     @Scripts.Render("~/bundles/bootbox_pushups")

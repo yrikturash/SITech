@@ -58,7 +58,7 @@ else
 
 <script>
     $(function () {
-        addColumnFiltersDataTable(12, 1);
+        addColumnFiltersDataTable("#datatable-column-filter", 4, 1);
         $('.row-filter th:first').empty().append('<input type="checkbox" id="check_all" />');
         $('th:first').attr("class", "");
     });

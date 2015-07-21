@@ -39,11 +39,13 @@ var addColumnFiltersDataTable = function(id, filtersCount, startPos)
 	startPos = startPos || 0; // по умолчанию 0
 	/* column filters */
 	if( $(id).length > 0 ) {
-		var dtTable = $('#datatable-column-filter').DataTable({ // use DataTable, not dataTable
+		var dtTable = $(id).DataTable({ // use DataTable, not dataTable
 			sDom: // redefine sDom without lengthChange and default search box
 				"t"+
-				"<'row'<'col-sm-6'i><'col-sm-6'p>>"
+				"<'row'<'col-sm-6'i><'col-sm-6'p>>",
+				"pagingType": "full_numbers"
 		}); 
+
 
 		var thstr = "";
 		for (var i = startPos; i < filtersCount; i++) {
@@ -68,6 +70,7 @@ var addColumnFiltersDataTable = function(id, filtersCount, startPos)
 				.search(this.value)
 				.draw();
 		});
+		return dtTable;
 	}
 }
 $(document).ready(function(){

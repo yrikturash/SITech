@@ -270,6 +270,9 @@
 
         var resultPrice = totalPrice * profitValue / 100;
 
+        //round to one digit after comma
+        resultPrice = Math.round(resultPrice * 10) / 10;
+
         bootbox.dialog({
             title: "Enter Menu Price",
             message: '<div class="row">  ' +
