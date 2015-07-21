@@ -34,9 +34,9 @@
                                         <tr>
                                             <td><input type="checkbox" class="itemCheckbox" data-code="@item.MenuItemId" name="selectedItems" value="@item.MenuItemId" /></td>
                                             <td>@item.ItemName</td>
-                                            <td>@item.ItemPrice</td>
+                                            <td>@item.ItemPrice.ToString("#,##0.00")</td>
                                             <td>@item.ItemType</td>
-                                            <td>@item.MenuPrice</td>
+                                            <td>@item.MenuPrice.ToString("#,##0.00")</td>
                                             <td>@item.Profit</td>
                                         </tr>
                                     }

@@ -272,7 +272,7 @@ var enterMenuPrice = function () {
     var resultPrice = totalPrice * profitValue / 100;
 
     //round to one digit after comma
-    resultPrice = Math.round(resultPrice * 10) / 10;
+    resultPrice = Math.round(resultPrice * 100) / 100;
 
     price = resultPrice;
 
