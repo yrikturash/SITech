@@ -533,8 +533,8 @@ var addBeverageInventoriesW = function () {
     '</div>'+
     '<div class="col-sm-4">'+
         '<div class="form-group form-group-default">'+
-            '<label for="Volume">Unit Of Measurment</label>'+
-            '<input class="form-control" id="Volume" name="Volume" placeholder="Volume in oz" required="required" type="text" value="">'+
+            '<label for="Volume">Unit Of Measurment</label>' +
+            '<select id="Volume" class="form-control" ><option value="Liter">Liter</option><option value="Oz">Oz</option><option value="Glass">Glass</option></select>' +
             '<span class="field-validation-valid" data-valmsg-for="Volume" data-valmsg-replace="true"></span>'+
         '</div>'+
     '</div>'+
