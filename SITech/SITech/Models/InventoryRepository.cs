@@ -94,6 +94,7 @@ namespace SITech.Models
             inv.Price = model.Price;
             inv.ProductName = model.ProductName;
             inv.UnitOfMeasurment = model.UnitOfMeasurment;
+            inv.Vendor = model.Vendor;
 
             db.Inventories.Add(inv);
             db.SaveChanges();

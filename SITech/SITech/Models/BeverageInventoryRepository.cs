@@ -106,7 +106,8 @@ namespace SITech.Models
                 Producer = model.Producer,
                 ProductName = model.ProductName,
                 Age = model.Age,
-                UnitOfMeasurment = model.UnitOfMeasurment
+                UnitOfMeasurment = model.UnitOfMeasurment,
+                Vendor = model.Vendor
             };
 
             db.BeverageInventories.Add(inv);
