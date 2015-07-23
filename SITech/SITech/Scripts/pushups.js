@@ -397,7 +397,7 @@ var editMenuItemPopup = function (data) {
     var options = "";
     for (var i = 0; i < data.BeverageList.length; i++) {
         options += '<tr>' +
-            '<td><input type="checkbox" class="edtItemCheckbox" data-code="@item.MenuItemId" name="selectedItems" value="@item.MenuItemId" /></td>' +
+            '<td><input type="checkbox" class="editItemCheckbox" name="selectedItems" data-type="0" value="' + data.BeverageList[i].Id + '" /></td>' +
             '<td>' + data.BeverageList[i].ProductName + '</td>' +
             '<td>' + data.BeverageList[i].Price + '</td>' +
             '<td>' + data.BeverageList[i].Price + '</td>' +
@@ -490,6 +490,44 @@ var updateMenuItem = function (item) {
         }
     });
 };
+
+//todo: delete baverege or inventory item on edit menuitem popup
+$('#delete_btn').on('click', function() {
+    var id = $('.editItemCheckbox:selected:first').val();
+    var type = $('.editItemCheckbox:selected:first').data('type');
+
+    if (type === 'beverage') {
+        $.ajax({
+            cache: false,
+            type: "delete",
+            url: '/api/beverage/delete?id=' + id,
+            contentType: 'application/json; charset=utf-8',
+            complete: function() {
+
+            },
+            success: function(data) {
+                location.reload();
+            },
+            error: function(error) {
+            }
+        });
+    } else {
+        $.ajax({
+            cache: false,
+            type: "delete",
+            url: '/api/inventory/delete?id='+id,
+            contentType: 'application/json; charset=utf-8',
+            complete: function () {
+
+            },
+            success: function (data) {
+                location.reload();
+            },
+            error: function (error) {
+            }
+        });
+    }
+});
 
 
 /*---------------- Add BeverageInventories ----------*-----------*/
