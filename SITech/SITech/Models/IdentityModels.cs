@@ -56,7 +56,8 @@ namespace SITech.Models
         public string CustomerId { get; set; }
         public bool IsActive { get; set; }
 
-        public string BeverageInventoryIds { get; set; }
+        public string BeverageIds { get; set; }
+        public string InventoryIds { get; set; }
 
         [ForeignKey("CustomerId")]
         public virtual ApplicationUser User { get; set; }
@@ -79,17 +80,17 @@ namespace SITech.Models
         [Key]
         public int Id { get; set; }
 
-        public int MenuItemId { get; set; }
+        //public int MenuItemId { get; set; }
 
         public string Vendor { get; set; }
 
-        public string Producer{ get; set; }
+        //public string Producer{ get; set; }
 
         public double Price { get; set; }
 
-        public string Volume { get; set; }
+        //public string Volume { get; set; }
 
-        public string DrinkType { get; set; }
+        //public string DrinkType { get; set; }
 
         public string ProductName { get; set; }
 
@@ -108,13 +109,13 @@ namespace SITech.Models
         [Key]
         public int Id { get; set; }
 
-        public int MenuItemId { get; set; }
+        //public int MenuItemId { get; set; }
 
         public string Vendor { get; set; }
 
         public double Price { get; set; }
 
-        public string Volume { get; set; }
+        //public string Volume { get; set; }
 
         public string ProductName { get; set; }
 

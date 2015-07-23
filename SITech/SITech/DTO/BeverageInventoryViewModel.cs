@@ -6,8 +6,6 @@ namespace SITech.DTO
     {
         public int Id { get; set; }
 
-        public int MenuItemId { get; set; }
-
         public string Vendor { get; set; }
 
         public string Producer { get; set; }
@@ -23,8 +21,6 @@ namespace SITech.DTO
         public int Age { get; set; }
 
         public string UnitOfMeasurment { get; set; }
-
-        public virtual MenuItem MenuItem { get; set; }
 
     }
 }

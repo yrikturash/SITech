@@ -30,7 +30,9 @@ namespace SITech.Models
                     ItemType = inv.ItemType,
                     MenuPrice = inv.MenuPrice,
                     Profit = inv.Profit,
-                    IsActive = inv.IsActive
+                    IsActive = inv.IsActive,
+                    BeverageIds = inv.BeverageIds,
+                    InventoryIds = inv.InventoryIds
                 });
             }
             return MenuItemViewModels;
@@ -52,7 +54,9 @@ namespace SITech.Models
                             ItemType = n.ItemType,
                             MenuPrice = n.MenuPrice,
                             Profit = n.Profit,
-                            IsActive = n.IsActive
+                            IsActive = n.IsActive,
+                            BeverageIds = n.BeverageIds,
+                            InventoryIds = n.InventoryIds
                         }).ToList();
             }
             else
@@ -68,7 +72,9 @@ namespace SITech.Models
                             ItemType = n.ItemType,
                             MenuPrice = n.MenuPrice,
                             Profit = n.Profit,
-                            IsActive = n.IsActive
+                            IsActive = n.IsActive,
+                            BeverageIds = n.BeverageIds,
+                            InventoryIds = n.InventoryIds
                         }).ToList();
             }
             return menuItemViewModels;
@@ -88,7 +94,9 @@ namespace SITech.Models
                     ItemType = inv.ItemType,
                     MenuPrice = inv.MenuPrice,
                     Profit = inv.Profit,
-                    IsActive = inv.IsActive
+                    IsActive = inv.IsActive,
+                    BeverageIds = inv.BeverageIds,
+                    InventoryIds = inv.InventoryIds
                 });
             }
             return MenuItemViewModels;
@@ -108,7 +116,9 @@ namespace SITech.Models
                     ItemType = inv.ItemType,
                     MenuPrice = inv.MenuPrice,
                     Profit = inv.Profit,
-                    IsActive = inv.IsActive
+                    IsActive = inv.IsActive,
+                    BeverageIds = inv.BeverageIds,
+                    InventoryIds = inv.InventoryIds
                 });
             }
             return menuItemViewModels;
@@ -128,7 +138,9 @@ namespace SITech.Models
                     ItemType = inv.ItemType,
                     MenuPrice = inv.MenuPrice,
                     Profit = inv.Profit,
-                    IsActive = inv.IsActive
+                    IsActive = inv.IsActive,
+                    BeverageIds = inv.BeverageIds,
+                    InventoryIds = inv.InventoryIds
                 });
             }
             return MenuItemViewModels;
@@ -148,7 +160,9 @@ namespace SITech.Models
                     ItemType = inv.ItemType,
                     MenuPrice = inv.MenuPrice,
                     Profit = inv.Profit,
-                    IsActive = inv.IsActive
+                    IsActive = inv.IsActive,
+                    BeverageIds = inv.BeverageIds,
+                    InventoryIds = inv.InventoryIds
                 };
             }
             return null;
@@ -165,7 +179,9 @@ namespace SITech.Models
                 ItemType = model.ItemType,
                 IsActive = model.IsActive,
                 MenuPrice = model.MenuPrice,
-                Profit = model.Profit
+                Profit = model.Profit,
+                BeverageIds = model.BeverageIds,
+                InventoryIds = model.InventoryIds
             };
 
 
@@ -184,7 +200,9 @@ namespace SITech.Models
                 ItemType = rate.ItemType,
                 IsActive = rate.IsActive,
                 MenuPrice = rate.MenuPrice,
-                Profit = rate.Profit
+                Profit = rate.Profit,
+                BeverageIds = rate.BeverageIds,
+                InventoryIds = rate.InventoryIds
             };
             db.Entry(item).State = EntityState.Modified;
 

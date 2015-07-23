@@ -20,11 +20,9 @@ namespace SITech.Models
             return db.Inventories.Select(n=> new InventoryViewModel()
             {
                 Id = n.Id,
-                MenuItemId = n.MenuItemId,
                 Price = n.Price,
                 ProductName = n.ProductName,
                 Vendor = n.Vendor,
-                Volume = n.Volume,
                 UnitOfMeasurment = n.UnitOfMeasurment
 
             }).AsQueryable();
@@ -38,30 +36,26 @@ namespace SITech.Models
                 inventoryViewModels.Add(new InventoryViewModel
                 {
                     Id = inv.Id,
-                    MenuItemId = inv.MenuItemId,
                     Price = inv.Price,
                     ProductName = inv.ProductName,
                     Vendor = inv.Vendor,
-                    Volume = inv.Volume,
                     UnitOfMeasurment = inv.UnitOfMeasurment
                 });
             }
             return inventoryViewModels;
     }
 
-        public List<InventoryViewModel> GetAllByUsername(int MenuItemId)
+        public List<InventoryViewModel> GetAllById(int id)
         {
             var inventoryViewModels = new List<InventoryViewModel>();
-            foreach (var inv in db.Inventories.Where(item => item.MenuItemId == MenuItemId))
+            foreach (var inv in db.Inventories.Where(item => item.Id == id))
             {
                 inventoryViewModels.Add(new InventoryViewModel
                 {
                     Id = inv.Id,
                     Price = inv.Price,
                     ProductName = inv.ProductName,
-                    MenuItemId = inv.MenuItemId,
                     Vendor = inv.Vendor,
-                    Volume = inv.Volume,
                     UnitOfMeasurment = inv.UnitOfMeasurment
                 });
             }
@@ -70,7 +64,7 @@ namespace SITech.Models
 
         public InventoryViewModel Get(int id)
     {
-        var inv = db.Inventories.Where(item => item.Id == id).FirstOrDefault();
+        var inv = db.Inventories.FirstOrDefault(item => item.Id == id);
             if(inv != null)
             {
                 return new InventoryViewModel
@@ -78,9 +72,7 @@ namespace SITech.Models
                     Id = inv.Id,
                     Price = inv.Price,
                     ProductName = inv.ProductName,
-                    MenuItemId = inv.MenuItemId,
                     Vendor = inv.Vendor,
-                    Volume = inv.Volume,
                     UnitOfMeasurment = inv.UnitOfMeasurment
                 };
             }
@@ -90,7 +82,6 @@ namespace SITech.Models
         public void Create(InventoryViewModel model)
     {
             Inventory inv = new Inventory();
-            inv.MenuItemId = model.MenuItemId;
             inv.Price = model.Price;
             inv.ProductName = model.ProductName;
             inv.UnitOfMeasurment = model.UnitOfMeasurment;

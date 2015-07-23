@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Cryptography;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
 using SITech.DTO;
@@ -45,7 +46,7 @@ namespace SITech.ApiControllers
 
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("addMenuItem")]
-        public HttpResponseMessage AddMenuItem(string name, float price, double menuPrice, double profit, string type, bool isActive, string beverageInventoryIds)
+        public HttpResponseMessage AddMenuItem(string name, float price, double menuPrice, double profit, string type, bool isActive, string beverageIds = null, string inventoryIds = null)
         {
             try
             {
@@ -59,7 +60,8 @@ namespace SITech.ApiControllers
                     ItemType = type,
                     Profit = profit,
                     MenuPrice = menuPrice,
-                    BeverageInventoryIds = beverageInventoryIds
+                    BeverageIds = beverageIds,
+                    InventoryIds = inventoryIds
                 };
                 _unitOfWork.MenuItems.Create(menuItem);
                 return Request.CreateResponse(HttpStatusCode.OK);
@@ -70,6 +72,32 @@ namespace SITech.ApiControllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("getEditData")]
+        public HttpResponseMessage GetEditData([FromUri] List<int> beverageIds = null, [FromUri] List<int> inventoryIds = null )
+        {
+            try
+            {
+                List<BeverageInventory> beverageList = new List<BeverageInventory>();
+                beverageIds?.ForEach(id => beverageList.Add(_unitOfWork.BeverageInventories.GetById(id)));
+
+                List<BeverageInventory> inventoryList = new List<BeverageInventory>();
+                inventoryIds?.ForEach(id => inventoryList.Add(_unitOfWork.BeverageInventories.GetById(id)));
+
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, new {InventoryList = inventoryList, BeverageList = beverageList});
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+
+
 
     }
 }

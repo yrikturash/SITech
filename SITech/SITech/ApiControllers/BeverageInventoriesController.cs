@@ -21,12 +21,27 @@ namespace SITech.ApiControllers
 
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("add")]
-        public HttpResponseMessage AddMenuItem([FromBody] BeverageInventoryViewModel model)
+        public HttpResponseMessage AddBeverageInventory([FromBody] BeverageInventoryViewModel model)
         {
             try
             {
                 _unitOfWork.BeverageInventories.Create(model);
                 return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("get")]
+        public HttpResponseMessage GetBeverageInventoryById(int id)
+        {
+            try
+            {
+                
+                return Request.CreateResponse(HttpStatusCode.OK, _unitOfWork.BeverageInventories.GetById(id));
             }
             catch (Exception ex)
             {

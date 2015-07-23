@@ -329,7 +329,7 @@ var addMenuItem = function() {
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/api/pushups/addMenuItem?name=' + menuItemName + '&price=' + price + '&type=' + type + '&menuPrice=' + menuPrice + '&profit=' + profitValue + '&isActive=' + isActive + '&beverageInventoryIds=' + beverageInventoryIds,
+        url: '/api/pushups/addMenuItem?name=' + menuItemName + '&price=' + price + '&type=' + type + '&menuPrice=' + menuPrice + '&profit=' + profitValue + '&isActive=' + isActive + '&beverageIds=' + beverageInventoryIds,
         //data: { 'id': id },
         contentType: 'application/json; charset=utf-8',
         complete: function() {
@@ -364,7 +364,29 @@ var editMenuItem = function (id) {
 
         },
         success: function (data) {
-            editMenuItemPopup(data);
+            console.log(data.BeverageIds);
+            data.BeverageIds = (data.BeverageIds[data.BeverageIds.length - 1] === ',') ? data.BeverageIds.slice(0, -1) : data.BeverageIds;
+            var beverageIdsStr = data.BeverageIds.split(',').join('&beverageIds=');
+            console.log(beverageIdsStr);
+
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '/api/pushups/getEditData?beverageIds=' + beverageIdsStr,
+                contentType: 'application/json; charset=utf-8',
+                complete: function () {
+
+
+                },
+                success: function (data2) {
+                    data.InventoryList = data2.InventoryList;
+                    data.BeverageList = data2.BeverageList;
+                    console.log(data);
+                    editMenuItemPopup(data);
+                },
+                error: function (error) {
+                }
+            });
         },
         error: function (error) {
         }
@@ -372,10 +394,54 @@ var editMenuItem = function (id) {
 };
 
 var editMenuItemPopup = function (data) {
+    var options = "";
+    for (var i = 0; i < data.BeverageList.length; i++) {
+        options += '<tr>' +
+            '<td><input type="checkbox" class="edtItemCheckbox" data-code="@item.MenuItemId" name="selectedItems" value="@item.MenuItemId" /></td>' +
+            '<td>' + data.BeverageList[i].ProductName + '</td>' +
+            '<td>' + data.BeverageList[i].Price + '</td>' +
+            '<td>' + data.BeverageList[i].Price + '</td>' +
+            '<td>' + data.BeverageList[i].UnitOfMeasurment + '</td>' +
+            '</tr>';
+
+    }
+    console.log(options);
+
+
+    var table = 
+    '<div class="row">'+
+    '<div class="col-md-12" style="margin-top: 20px;">'+
+        '<div class="widget widget-table">'+
+            '<div class="widget-content">'+
+                '<table id="datatable-column-filter" class="table table-sorting table-striped table-hover datatable">'+
+                    '<thead>'+
+                        '<tr>'+
+                            '<th style="width: 15px;"></th>'+
+                            '<th>Item Name</th>'+
+                            '<th>Cost Price</th>'+
+                            '<th>Amount</th>'+
+                            '<th>Measurement</th>'+
+                        '</tr>'+
+                    '</thead>'+
+                    '<tbody>'+
+                            options +
+                    '</tbody>'+
+                '</table>'+
+            '</div>'+
+        '</div>'+
+    '</div>'+
+'</div>';
+
+    var btnRow =
+        '<div class="row">' +
+            '<input type="button" class="btn btn-default" value="Delete Item" id="delete_item">' +
+            '<input type="button" class="btn btn-default" style="margin-left:20px;" value="Add New Item to ' + data.ItemName + '" id="add_new_item">' +
+        '</div>';
 
     bootbox.dialog({
-        title: "Edit",
-        message: '<h4>Total Cost of ' + data.ItemName + ': ' + data.ItemPrice + '</h3>' +
+        title: "Edit " + data.ItemName,
+        message: table + btnRow +
+            '<h4>Total Cost of ' + data.ItemName + ': ' + data.ItemPrice + '</h3>' +
             '<div class="row">  ' +
             '<div class="col-md-12"> ' +
             '<form class="form-horizontal"> ' +
