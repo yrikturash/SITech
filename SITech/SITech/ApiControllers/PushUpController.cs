@@ -22,7 +22,7 @@ namespace SITech.ApiControllers
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("getdata")]
-        public HttpResponseMessage GetPushUpData([FromUri] bool isActive = true)
+        public HttpResponseMessage GetPushUpData()
         {
             try
             {
@@ -32,8 +32,8 @@ namespace SITech.ApiControllers
                     new
                     {
                         BeverageList =
-                            _unitOfWork.MenuItems.GetByItemType("Beverage Inventory", isActive, customerId),
-                        InventoryList = _unitOfWork.MenuItems.GetByItemType("Food", isActive)
+                            _unitOfWork.BeverageInventories.GetAll(),
+                        InventoryList = _unitOfWork.Inventories.GetAll()
                     });
 
             }
@@ -45,7 +45,7 @@ namespace SITech.ApiControllers
 
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("addMenuItem")]
-        public HttpResponseMessage AddMenuItem(string name, float price, double menuPrice, double profit, string type, bool isActive)
+        public HttpResponseMessage AddMenuItem(string name, float price, double menuPrice, double profit, string type, bool isActive, string beverageInventoryIds)
         {
             try
             {
@@ -58,7 +58,8 @@ namespace SITech.ApiControllers
                     ItemPrice = price,
                     ItemType = type,
                     Profit = profit,
-                    MenuPrice = menuPrice
+                    MenuPrice = menuPrice,
+                    BeverageInventoryIds = beverageInventoryIds
                 };
                 _unitOfWork.MenuItems.Create(menuItem);
                 return Request.CreateResponse(HttpStatusCode.OK);

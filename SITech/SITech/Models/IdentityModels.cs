@@ -56,6 +56,8 @@ namespace SITech.Models
         public string CustomerId { get; set; }
         public bool IsActive { get; set; }
 
+        public string BeverageInventoryIds { get; set; }
+
         [ForeignKey("CustomerId")]
         public virtual ApplicationUser User { get; set; }
     }
@@ -95,8 +97,8 @@ namespace SITech.Models
 
         public int Age { get; set; }
 
-        [ForeignKey("MenuItemId")]
-        public virtual MenuItem MenuItem { get; set; }
+        //[ForeignKey("MenuItemId")]
+        //public virtual MenuItem MenuItem { get; set; }
 
     }
 
@@ -119,8 +121,8 @@ namespace SITech.Models
         public string UnitOfMeasurment { get; set; }
 
 
-        [ForeignKey("MenuItemId")]
-        public virtual MenuItem MenuItem { get; set; }
+        //[ForeignKey("MenuItemId")]
+        //public virtual MenuItem MenuItem { get; set; }
 
     }
 

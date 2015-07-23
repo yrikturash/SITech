@@ -12,7 +12,7 @@ var price = null;
 var selectedMenuItemsList = [];
 
 //data about inventory & bavarages from db
-var menuItems = null;
+var beverageInventoryListArray = null;
 
 //bavarege or inventory (true/false)
 var isBeverage = null;
@@ -33,7 +33,7 @@ $('#create_menu_item').on("click", function () {
     $.ajax({
         cache: false,
         type: "GET",
-        url: '/api/pushups/getdata?isActive=' + isActive,
+        url: '/api/pushups/getdata',
         //data: { 'id': id },
         contentType: 'application/json; charset=utf-8',
         complete: function () {
@@ -41,7 +41,7 @@ $('#create_menu_item').on("click", function () {
 
         },
         success: function (data) {
-            menuItems = data;
+            beverageInventoryListArray = data;
             createMenuItem();
 
         },
@@ -94,8 +94,8 @@ var addBeverages = function () {
 };
 var addBeverage = function () {
     var options = "";
-    for (var i = 0; i < menuItems.BeverageList.length; i++) {
-        options += "<option value='" + menuItems.BeverageList[i].MenuItemId + "' data-price='" + menuItems.BeverageList[i].ItemPrice + "'>" + menuItems.BeverageList[i].ItemName + "</option>";
+    for (var i = 0; i < beverageInventoryListArray.BeverageList.length; i++) {
+        options += "<option value='" + beverageInventoryListArray.BeverageList[i].Id + "' data-price='" + beverageInventoryListArray.BeverageList[i].Price + "'>" + beverageInventoryListArray.BeverageList[i].ProductName + "</option>";
 
     }
     bootbox.dialog({
@@ -180,8 +180,8 @@ var addInventoryQ = function () {
 };
 var addInventory = function () {
     var options = "";
-    for (var i = 0; i < menuItems.InventoryList.length; i++) {
-        options += "<option value='" + menuItems.InventoryList[i].MenuItemId + "' data-price='" + menuItems.InventoryList[i].ItemPrice + "'>" + menuItems.InventoryList[i].ItemName + "</option>";
+    for (var i = 0; i < beverageInventoryListArray.InventoryList.length; i++) {
+        options += "<option value='" + beverageInventoryListArray.InventoryList[i].Id + "' data-price='" + beverageInventoryListArray.InventoryList[i].Price + "'>" + beverageInventoryListArray.InventoryList[i].ProductName + "</option>";
 
     }
     bootbox.dialog({
@@ -279,6 +279,7 @@ var enterMenuPrice = function () {
         totalPrice += (selectedMenuItemsList[i].Price * selectedMenuItemsList[i].Qty);
     }
 
+
     var resultPrice = totalPrice * profitValue / 100;
 
     //round to one digit after comma
@@ -312,23 +313,34 @@ var enterMenuPrice = function () {
     });
 };
 
-var addMenuItem = function () {
+var addMenuItem = function() {
     var type = isBeverage ? "Beverage Inventory" : "Food";
+
+    var beverageInventoryIds = "";
+    for (var i = 0; i < selectedMenuItemsList.length; i++) {
+        //make uniqe
+        if (beverageInventoryIds.indexOf(selectedMenuItemsList[i].Id.toString()) < 0) {
+            beverageInventoryIds +=
+                selectedMenuItemsList[i].Id + ',';
+        }
+    }
+    console.log(beverageInventoryIds);
+
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/api/pushups/addMenuItem?name=' + menuItemName + '&price=' + price + '&type=' + type + '&menuPrice=' + menuPrice + '&profit=' + profitValue + '&isActive=' + isActive,
+        url: '/api/pushups/addMenuItem?name=' + menuItemName + '&price=' + price + '&type=' + type + '&menuPrice=' + menuPrice + '&profit=' + profitValue + '&isActive=' + isActive + '&beverageInventoryIds=' + beverageInventoryIds,
         //data: { 'id': id },
         contentType: 'application/json; charset=utf-8',
-        complete: function () {
+        complete: function() {
 
 
         },
-        success: function (data) {
+        success: function(data) {
             window.location.reload();
 
         },
-        error: function (error) {
+        error: function(error) {
         }
     });
 };

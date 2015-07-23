@@ -10,5 +10,7 @@
         public double MenuPrice { get; set; }
         public double Profit { get; set; }
         public bool IsActive { get; set; }
+        public string BeverageInventoryIds { get; set; }
+
     }
 }

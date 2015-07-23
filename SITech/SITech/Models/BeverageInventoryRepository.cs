@@ -12,9 +12,9 @@ namespace SITech.Models
         private ApplicationDbContext db;
 
         public BeverageInventoryRepository(ApplicationDbContext context)
-    {
-        this.db = context;
-    }
+        {
+            this.db = context;
+        }
 
         public IEnumerable<BeverageInventoryViewModel> GetAll()
         {
@@ -31,31 +31,30 @@ namespace SITech.Models
                     Volume = inv.Volume,
                     UnitOfMeasurment = inv.UnitOfMeasurment,
                     Age = inv.Age
-                    
                 });
             }
             return inventoryViewModels;
         }
 
         public IEnumerable<BeverageInventoryViewModel> GetAll(int menuItemId)
-    {
-        List<BeverageInventoryViewModel> inventoryViewModels = new List<BeverageInventoryViewModel>();
-        foreach (var inv in db.BeverageInventories)
         {
-            inventoryViewModels.Add(new BeverageInventoryViewModel
+            List<BeverageInventoryViewModel> inventoryViewModels = new List<BeverageInventoryViewModel>();
+            foreach (var inv in db.BeverageInventories)
             {
-                Id = inv.Id,
-                MenuItemId = inv.MenuItemId,
-                Price = inv.Price,
-                ProductName = inv.ProductName,
-                Vendor = inv.Vendor,
-                Volume = inv.Volume,
-                Age = inv.Age,
-                UnitOfMeasurment = inv.UnitOfMeasurment
-            });
+                inventoryViewModels.Add(new BeverageInventoryViewModel
+                {
+                    Id = inv.Id,
+                    MenuItemId = inv.MenuItemId,
+                    Price = inv.Price,
+                    ProductName = inv.ProductName,
+                    Vendor = inv.Vendor,
+                    Volume = inv.Volume,
+                    Age = inv.Age,
+                    UnitOfMeasurment = inv.UnitOfMeasurment
+                });
+            }
+            return inventoryViewModels;
         }
-        return inventoryViewModels;
-    }
 
         public List<BeverageInventoryViewModel> GetAllByUsername(int MenuItemId)
         {
@@ -78,9 +77,9 @@ namespace SITech.Models
         }
 
         public BeverageInventoryViewModel Get(int id)
-    {
-        var inv = db.BeverageInventories.Where(item => item.Id == id).FirstOrDefault();
-            if(inv != null)
+        {
+            var inv = db.BeverageInventories.Where(item => item.Id == id).FirstOrDefault();
+            if (inv != null)
             {
                 return new BeverageInventoryViewModel
                 {
@@ -95,7 +94,7 @@ namespace SITech.Models
                 };
             }
             return null;
-    }
+        }
 
         public void Create(BeverageInventoryViewModel model)
         {
@@ -121,16 +120,15 @@ namespace SITech.Models
 
             db.SaveChanges();
         }
- 
-    public void Delete(int id)
-    {
-        BeverageInventory rate = db.BeverageInventories.Find(id);
+
+        public void Delete(int id)
+        {
+            BeverageInventory rate = db.BeverageInventories.Find(id);
             if (rate != null)
             {
                 db.BeverageInventories.Remove(rate);
                 db.SaveChanges();
             }
         }
-
     }
 }
