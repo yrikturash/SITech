@@ -14,6 +14,8 @@ namespace SITech.DTO
 
         public string Volume { get; set; }
 
+        public string UnitOfMeasurment { get; set; }
+
         public string ProductName { get; set; }
 
         public virtual MenuItem MenuItem { get; set; }

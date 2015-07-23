@@ -29,6 +29,7 @@ namespace SITech.Models
                     ProductName = inv.ProductName,
                     Vendor = inv.Vendor,
                     Volume = inv.Volume,
+                    UnitOfMeasurment = inv.UnitOfMeasurment,
                     Age = inv.Age
                     
                 });
@@ -49,7 +50,8 @@ namespace SITech.Models
                 ProductName = inv.ProductName,
                 Vendor = inv.Vendor,
                 Volume = inv.Volume,
-                Age = inv.Age
+                Age = inv.Age,
+                UnitOfMeasurment = inv.UnitOfMeasurment
             });
         }
         return inventoryViewModels;
@@ -68,7 +70,8 @@ namespace SITech.Models
                     ProductName = inv.ProductName,
                     Vendor = inv.Vendor,
                     Volume = inv.Volume,
-                    Age = inv.Age
+                    Age = inv.Age,
+                    UnitOfMeasurment = inv.UnitOfMeasurment
                 });
             }
             return inventoryViewModels;
@@ -87,7 +90,8 @@ namespace SITech.Models
                     ProductName = inv.ProductName,
                     Vendor = inv.Vendor,
                     Volume = inv.Volume,
-                    Age = inv.Age
+                    Age = inv.Age,
+                    UnitOfMeasurment = inv.UnitOfMeasurment
                 };
             }
             return null;
@@ -102,7 +106,8 @@ namespace SITech.Models
                 Price = model.Price,
                 Producer = model.Producer,
                 ProductName = model.ProductName,
-                Age = model.Age
+                Age = model.Age,
+                UnitOfMeasurment = model.UnitOfMeasurment
             };
 
             db.BeverageInventories.Add(inv);

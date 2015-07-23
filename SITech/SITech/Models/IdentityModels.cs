@@ -91,6 +91,8 @@ namespace SITech.Models
 
         public string ProductName { get; set; }
 
+        public string UnitOfMeasurment { get; set; }
+
         public int Age { get; set; }
 
         [ForeignKey("MenuItemId")]
@@ -113,6 +115,9 @@ namespace SITech.Models
         public string Volume { get; set; }
 
         public string ProductName { get; set; }
+
+        public string UnitOfMeasurment { get; set; }
+
 
         [ForeignKey("MenuItemId")]
         public virtual MenuItem MenuItem { get; set; }

@@ -24,7 +24,8 @@ namespace SITech.Models
                 Price = n.Price,
                 ProductName = n.ProductName,
                 Vendor = n.Vendor,
-                Volume = n.Volume
+                Volume = n.Volume,
+                UnitOfMeasurment = n.UnitOfMeasurment
 
             }).AsQueryable();
         }
@@ -41,7 +42,8 @@ namespace SITech.Models
                     Price = inv.Price,
                     ProductName = inv.ProductName,
                     Vendor = inv.Vendor,
-                    Volume = inv.Volume
+                    Volume = inv.Volume,
+                    UnitOfMeasurment = inv.UnitOfMeasurment
                 });
             }
             return inventoryViewModels;
@@ -59,7 +61,8 @@ namespace SITech.Models
                     ProductName = inv.ProductName,
                     MenuItemId = inv.MenuItemId,
                     Vendor = inv.Vendor,
-                    Volume = inv.Volume
+                    Volume = inv.Volume,
+                    UnitOfMeasurment = inv.UnitOfMeasurment
                 });
             }
             return inventoryViewModels;
@@ -77,7 +80,8 @@ namespace SITech.Models
                     ProductName = inv.ProductName,
                     MenuItemId = inv.MenuItemId,
                     Vendor = inv.Vendor,
-                    Volume = inv.Volume
+                    Volume = inv.Volume,
+                    UnitOfMeasurment = inv.UnitOfMeasurment
                 };
             }
             return null;
@@ -89,6 +93,7 @@ namespace SITech.Models
             inv.MenuItemId = model.MenuItemId;
             inv.Price = model.Price;
             inv.ProductName = model.ProductName;
+            inv.UnitOfMeasurment = model.UnitOfMeasurment;
 
             db.Inventories.Add(inv);
             db.SaveChanges();
