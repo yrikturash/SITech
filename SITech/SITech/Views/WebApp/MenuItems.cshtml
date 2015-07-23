@@ -7,7 +7,7 @@
             <div class="panel-title">
                 Active Menu
             </div>
-            <a class="btn btn-default" style="margin-left: 25px; opacity: 1;" href="#" id="create_menu_item">Add New Menu Item</a>
+            <a class="btn btn-default" style="margin-left: 25px; opacity: 1;" href="#" id="create_menu_item" data-type="active" >Add New Menu Item</a>
             <div class="clearfix"></div>
         </div>
         @using (Html.BeginForm("MenuItems", "WebApp", FormMethod.Post, new { @id = "frm" }))
@@ -120,9 +120,9 @@ else
 
             //console.log(menuItemList);
             $.ajax({
-                url: '/api/menuitem/deactivate',
-                type: 'get',
-                data: { 'menuItemList': menuItemList },
+                url: '/api/menuitem/deactivate?ids=' + menuItemList.join(','),
+                type: 'put',
+                //data: { 'menuItemList': menuItemList },
                 success: function (result) {
                     $(".itemCheckbox:checked").each(function () {
                         this.closest('tr').remove();

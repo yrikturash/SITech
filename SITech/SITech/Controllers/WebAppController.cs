@@ -34,7 +34,7 @@ namespace SITech.Controllers
                 null)
             {
                 customerId = firstOrDefault.Id;
-                model = _unitOfWorks.MenuItems.GetAllByCustomerId(customerId);
+                model = _unitOfWorks.MenuItems.GetAllByCustomerId(customerId).OrderByDescending(n => n.ItemPrice);
                 return View(model);
             }
 
@@ -52,7 +52,7 @@ namespace SITech.Controllers
                 null)
             {
                 customerId = firstOrDefault.Id;
-                model = inventoryRepository.GetAllUnactive(customerId);
+                model = inventoryRepository.GetAllUnactive(customerId).OrderByDescending(n => n.ItemPrice);
                 return View(model);
             }
 

@@ -36,13 +36,13 @@ namespace SITech.Models
             return MenuItemViewModels;
         }
 
-        public IEnumerable<MenuItemViewModel> GetByItemType(string itemType, string customerId = null)
+        public IEnumerable<MenuItemViewModel> GetByItemType(string itemType, bool isActive = true, string customerId = null)
         {
             var menuItemViewModels = new List<MenuItemViewModel>();
             if (customerId != null)
             {
                 menuItemViewModels =
-                    db.MenuItems.Where(item => item.IsActive == true && item.ItemType == itemType && item.CustomerId == customerId).Select(n =>
+                    db.MenuItems.Where(item => item.IsActive == isActive && item.ItemType == itemType && item.CustomerId == customerId).Select(n =>
                         new MenuItemViewModel
                         {
                             MenuItemId = n.MenuItemId,
@@ -58,7 +58,7 @@ namespace SITech.Models
             else
             {
                 menuItemViewModels =
-                    db.MenuItems.Where(item => item.IsActive == true && item.ItemType == itemType).Select(n =>
+                    db.MenuItems.Where(item => item.IsActive == isActive && item.ItemType == itemType).Select(n =>
                         new MenuItemViewModel
                         {
                             MenuItemId = n.MenuItemId,

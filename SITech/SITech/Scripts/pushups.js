@@ -17,13 +17,23 @@ var menuItems = null;
 //bavarege or inventory (true/false)
 var isBeverage = null;
 
+//
+var isActive = true;
+
 
 $('#create_menu_item').on("click", function () {
+
+    //is active menu item?
+    if ($(this).data('type') === "unactive") {
+        isActive = false;
+    }
+
+    console.log(isActive);
 
     $.ajax({
         cache: false,
         type: "GET",
-        url: '/api/pushups/getdata',
+        url: '/api/pushups/getdata?isActive=' + isActive,
         //data: { 'id': id },
         contentType: 'application/json; charset=utf-8',
         complete: function () {
@@ -307,7 +317,7 @@ var addMenuItem = function () {
     $.ajax({
         cache: false,
         type: "POST",
-        url: '/api/pushups/addMenuItem?name=' + menuItemName + '&price=' + price + '&type=' + type + '&menuPrice=' + menuPrice + '&profit=' + profitValue,
+        url: '/api/pushups/addMenuItem?name=' + menuItemName + '&price=' + price + '&type=' + type + '&menuPrice=' + menuPrice + '&profit=' + profitValue + '&isActive=' + isActive,
         //data: { 'id': id },
         contentType: 'application/json; charset=utf-8',
         complete: function () {

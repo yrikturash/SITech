@@ -91,15 +91,36 @@ namespace SITech.ApiControllers
 
 
 
-        [HttpGet]
+        [HttpPut]
         [System.Web.Http.Route("deactivate")]
-        public HttpResponseMessage DectivateMenuItems([FromUri] List<string> menuItemList)
+        public HttpResponseMessage DectivateMenuItems([FromUri]string ids)
         {
             try
             {
-                foreach (var menuItem in menuItemList)
+                var idsList = ids.Split(',');
+                foreach (var id in idsList)
                 {
-                    _unitOfWork.MenuItems.DeActivate(Convert.ToInt32(menuItem));
+                    _unitOfWork.MenuItems.DeActivate(Convert.ToInt32(id));
+                }
+                return Request.CreateResponse(HttpStatusCode.OK);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+        [HttpPut]
+        [System.Web.Http.Route("activate")]
+        public HttpResponseMessage ActivateMenuItems([FromUri] string ids)
+        {
+            try
+            {
+                var idsList = ids.Split(',');
+                foreach (var id in idsList)
+                {
+                    _unitOfWork.MenuItems.Activate(Convert.ToInt32(id));
                 }
                 return Request.CreateResponse(HttpStatusCode.OK);
 
