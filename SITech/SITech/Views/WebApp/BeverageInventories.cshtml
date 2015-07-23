@@ -28,11 +28,11 @@
                                         <th style="width: 15px;"></th>
                                         <th>ProductName</th>
                                         <th>Vendor</th>
-                                        <th>Producer</th>
-                                        <th>Price</th>
+                                        @*<th>Producer</th>*@
+                                        <th>Cost</th>
                                         <th>Age</th>
-                                        <th>Volume</th>
-                                        <th>DrinkType</th>
+                                        <th>Unit Of Measurment</th>
+                                        @*<th>DrinkType</th>*@
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -42,11 +42,11 @@
                                             <td><input type="checkbox" class="itemCheckbox" data-code="@item.Id" name="selectedItems" value="@item.Id" /></td>
                                             <td>@item.ProductName</td>
                                             <td>@item.Vendor</td>
-                                            <td>@item.Producer</td>
+                                            @*<td>@item.Producer</td>*@
                                             <td>@item.Price</td>
                                             <td>@item.Age</td>
                                             <td>@item.Volume</td>
-                                            <td>@item.DrinkType</td>
+                                            @*<td>@item.DrinkType</td>*@
                                         </tr>
                                     }
 
@@ -59,9 +59,9 @@
             </div>
 
             <div class="row" style="margin-left: 5px;">
-                <a type="button" class="btn btn-default" href="/WebApp/AddBeverageInventory">Add</a>
-                <input type="button" class="btn btn-default" value="Delete" id="delete_customer" />
-                <input type="button" class="btn btn-default" value="Save" />
+                <a type="button" class="btn btn-default" href="#" id="add_beverageInventories" >Add</a>
+                <input type="button" class="btn btn-default" value="Delete" id="delete_beverageInventories" />
+                <input type="button" class="btn btn-default" value="Edit" id="edit_beverageInventories" />
             </div>
         }
     </div>
@@ -74,7 +74,7 @@ else
 
 <script>
     $(function () {
-        addColumnFiltersDataTable(12, 1);
+        addColumnFiltersDataTable("#datatable-column-filter", 6, 1);
         $('.row-filter th:first').empty().append('<input type="checkbox" id="check_all" />');
         $('th:first').attr("class", "");
     });

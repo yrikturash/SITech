@@ -416,3 +416,68 @@ var updateMenuItem = function (item) {
         }
     });
 };
+
+
+/*---------------- Add BeverageInventories ----------*-----------*/
+$('#add_beverageInventories').on('click', function() {
+    addBeverageInventories();
+});
+var addBeverageInventories = function () {
+    var html = 
+        '<div class="row">'+
+    '<div class="col-sm-12">'+
+        '<div class="form-group form-group-default">'+
+            '<label for="ProductName">ProductName</label>'+
+            '<input class="form-control" id="ProductName" name="ProductName" placeholder="Name of your product" required="required" type="text" value="">'+
+            '<span class="field-validation-valid" data-valmsg-for="ProductName" data-valmsg-replace="true"></span>'+
+       ' </div>'+
+    '</div>'+
+'</div>'+
+'<div class="row">'+
+    '<div class="col-sm-12">'+
+        '<div class="form-group form-group-default">'+
+            '<label for="Vendor">Vendor</label>'+
+            '<input class="form-control" id="Vendor" name="Vendor" placeholder="Vendor Name" required="required" type="text" value="">'+
+            '<span class="field-validation-valid" data-valmsg-for="Vendor" data-valmsg-replace="true"></span>'+
+        '</div>'+
+    '</div>'+
+'</div>'+
+'<div class="row">'+
+    '<div class="col-sm-4">'+
+       ' <div class="form-group form-group-default">'+
+            '<label for="Price">Price</label>'+
+            '<input class="form-control" data-val="true" data-val-number="The field Price must be a number." data-val-required="The Price field is required." id="Price" name="Price" placeholder="Your price" required="required" type="text" value="0">'+
+            '<span class="field-validation-valid" data-valmsg-for="Price" data-valmsg-replace="true"></span>'+
+        '</div>'+
+    '</div>'+
+    '<div class="col-sm-4">'+
+        '<div class="form-group form-group-default">'+
+            '<label for="Age">Age</label>'+
+            '<input class="form-control" data-val="true" data-val-number="The field Age must be a number." data-val-required="The Age field is required." id="Age" name="Age" placeholder="Age" required="required" type="text" value="0">'+
+            '<span class="field-validation-valid" data-valmsg-for="Age" data-valmsg-replace="true"></span>'+
+        '</div>'+
+    '</div>'+
+    '<div class="col-sm-4">'+
+        '<div class="form-group form-group-default">'+
+            '<label for="Volume">Unit Of Measurment</label>'+
+            '<input class="form-control" id="Volume" name="Volume" placeholder="Volume in oz" required="required" type="text" value="">'+
+            '<span class="field-validation-valid" data-valmsg-for="Volume" data-valmsg-replace="true"></span>'+
+        '</div>'+
+    '</div>'+
+'</div>';
+    bootbox.dialog({
+        title: "Add",
+        message: html,
+        buttons: {
+            success: {
+                label: "Save",
+                className: "btn-success",
+                callback: function () {
+                    //data.MenuPrice = $('#menu_price').val();
+                    //data.Profit = $('#profit').val();
+                    //updateMenuItem(data);
+                }
+            }
+        }
+    });
+};
