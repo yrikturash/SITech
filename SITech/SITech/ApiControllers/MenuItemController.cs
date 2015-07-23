@@ -54,11 +54,12 @@ namespace SITech.ApiControllers
 
         [System.Web.Http.HttpDelete]
         [System.Web.Http.Route("delete")]
-        public HttpResponseMessage DeleteMenuItem([FromUri] List<int> ids)
+        public HttpResponseMessage DeleteMenuItem([FromUri] string ids)
         {
             try
             {
-                foreach (var id in ids)
+                var idsList = ids.Split(',');
+                foreach (var id in idsList)
                 {
                     _unitOfWork.MenuItems.Delete(Convert.ToInt32(id));
                 }
