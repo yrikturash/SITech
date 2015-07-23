@@ -357,10 +357,6 @@ var editMenuItem = function (id) {
         error: function (error) {
         }
     });
-
-
-
-
 };
 
 var editMenuItemPopup = function (data) {
@@ -420,9 +416,9 @@ var updateMenuItem = function (item) {
 
 /*---------------- Add BeverageInventories ----------*-----------*/
 $('#add_beverageInventories').on('click', function() {
-    addBeverageInventories();
+    addBeverageInventoriesW();
 });
-var addBeverageInventories = function () {
+var addBeverageInventoriesW = function () {
     var html = 
         '<div class="row">'+
     '<div class="col-sm-12">'+
@@ -473,11 +469,120 @@ var addBeverageInventories = function () {
                 label: "Save",
                 className: "btn-success",
                 callback: function () {
-                    //data.MenuPrice = $('#menu_price').val();
-                    //data.Profit = $('#profit').val();
-                    //updateMenuItem(data);
+                    var model = {
+                        ProductName : $('#ProductName').val(),
+                        Vendor: $('#Vendor').val(),
+                        Price: $('#Price').val(),
+                        UnitOfMeasurment: $('#Volume').val(),
+                        Age: $('#Age').val()
+                    };
+                    addBeverageInventories(model);
                 }
             }
         }
     });
 };
+
+
+var addBeverageInventories = function(model) {
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url: '/api/beverageInventories/add',
+        data: JSON.stringify(model),
+        contentType: 'application/json; charset=utf-8',
+        complete: function () {
+
+
+        },
+        success: function (data) {
+            window.location.reload();
+
+        },
+        error: function (error) {
+        }
+    });
+}
+
+
+/*---------------- Add Inventories ---------------------*/
+$('#add_inventories').on('click', function() {
+    addInventoriesW();
+});
+var addInventoriesW = function () {
+    var html = 
+        '<div class="row">'+
+    '<div class="col-sm-12">'+
+        '<div class="form-group form-group-default">'+
+            '<label for="ProductName">ProductName</label>'+
+            '<input class="form-control" id="ProductName" name="ProductName" placeholder="Name of your product" required="required" type="text" value="">'+
+            '<span class="field-validation-valid" data-valmsg-for="ProductName" data-valmsg-replace="true"></span>'+
+       ' </div>'+
+    '</div>'+
+'</div>'+
+'<div class="row">'+
+    '<div class="col-sm-12">'+
+        '<div class="form-group form-group-default">'+
+            '<label for="Vendor">Vendor</label>'+
+            '<input class="form-control" id="Vendor" name="Vendor" placeholder="Vendor Name" required="required" type="text" value="">'+
+            '<span class="field-validation-valid" data-valmsg-for="Vendor" data-valmsg-replace="true"></span>'+
+        '</div>'+
+    '</div>'+
+'</div>'+
+'<div class="row">'+
+    '<div class="col-sm-6">'+
+       ' <div class="form-group form-group-default">'+
+            '<label for="Price">Price</label>'+
+            '<input class="form-control" data-val="true" data-val-number="The field Price must be a number." data-val-required="The Price field is required." id="Price" name="Price" placeholder="Your price" required="required" type="text" value="0">'+
+            '<span class="field-validation-valid" data-valmsg-for="Price" data-valmsg-replace="true"></span>'+
+        '</div>'+
+    '</div>'+
+    '<div class="col-sm-6">'+
+        '<div class="form-group form-group-default">'+
+            '<label for="Volume">Unit Of Measurment</label>'+
+            '<input class="form-control" id="Volume" name="Volume" placeholder="Volume in oz" required="required" type="text" value="">'+
+            '<span class="field-validation-valid" data-valmsg-for="Volume" data-valmsg-replace="true"></span>'+
+        '</div>'+
+    '</div>'+
+'</div>';
+    bootbox.dialog({
+        title: "Add",
+        message: html,
+        buttons: {
+            success: {
+                label: "Save",
+                className: "btn-success",
+                callback: function () {
+                    var model = {
+                        ProductName : $('#ProductName').val(),
+                        Vendor: $('#Vendor').val(),
+                        Price: $('#Price').val(),
+                        UnitOfMeasurment: $('#Volume').val(),
+                    };
+                    addInventories(model);
+                }
+            }
+        }
+    });
+};
+
+
+var addInventories = function (model) {
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url: '/api/inventories/add',
+        data: JSON.stringify(model),
+        contentType: 'application/json; charset=utf-8',
+        complete: function () {
+
+
+        },
+        success: function (data) {
+            window.location.reload();
+
+        },
+        error: function (error) {
+        }
+    });
+}

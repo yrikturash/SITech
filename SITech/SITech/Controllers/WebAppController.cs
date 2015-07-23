@@ -140,11 +140,7 @@ namespace SITech.Controllers
 
         public ActionResult Inventories()
         {
-            InventoryRepository inventoryRepository = new InventoryRepository(new ApplicationDbContext());
-
-            var model = inventoryRepository.GetAll();
-
-            return View(model);
+            return View(_unitOfWorks.Inventories.GetAll());
         }
 
         public ActionResult AddInventory()

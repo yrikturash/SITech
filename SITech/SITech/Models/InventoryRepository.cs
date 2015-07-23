@@ -17,7 +17,16 @@ namespace SITech.Models
         }
         public IEnumerable<InventoryViewModel> GetAll()
         {
-            return db.Inventories.Cast<InventoryViewModel>().AsQueryable();
+            return db.Inventories.Select(n=> new InventoryViewModel()
+            {
+                Id = n.Id,
+                MenuItemId = n.MenuItemId,
+                Price = n.Price,
+                ProductName = n.ProductName,
+                Vendor = n.Vendor,
+                Volume = n.Volume
+
+            }).AsQueryable();
         }
 
         public IEnumerable<InventoryViewModel> GetAll(int menuItemId)

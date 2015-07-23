@@ -222,6 +222,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiControllers\BeverageInventoriesController.cs" />
+    <Compile Include="ApiControllers\InventoriesController.cs" />
     <Compile Include="ApiControllers\MenuItemController.cs" />
     <Compile Include="ApiControllers\PushUpController.cs" />
     <Compile Include="App_Start\BootstrapEditorTemplatesConfig.cs" />

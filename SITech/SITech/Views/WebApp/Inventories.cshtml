@@ -1,74 +1,80 @@
-﻿@model System.Collections.Generic.IEnumerable<SITech.DTO.InventoryViewModel>
+﻿@model IEnumerable<SITech.DTO.InventoryViewModel>
 
-@{
-    ViewBag.Title = "Inventories";
-}
+    @{
+        ViewBag.Title = "Beverage Inventories";
+    }
 
-@if (Request.IsAuthenticated)
-{
+    @if (Request.IsAuthenticated)
+    {
 
     <!-- START PANEL -->
-    <div class="panel panel-transparent">
-        <div class="panel-heading">
-            <div class="panel-title">
-                Inventories
-            </div>
-            <div class="clearfix"></div>
-        </div>
-        @using (Html.BeginForm("Inventories", "WebApp", FormMethod.Post, new { @id = "frm" }))
-        {
-            <div class="row">
-                <div class="col-md-12" style="margin-top: 20px;">
-                    <!-- COLUMN FILTER DATA TABLE -->
-                    <div class="widget widget-table">
-                        <div class="widget-content">
-                            <table id="datatable-column-filter" class="table table-sorting table-striped table-hover datatable">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 15px;"></th>
-                                        <th>ProductName</th>
-                                        <th>Vendor</th>
-                                        <th>Price</th>
-                                        <th>Volume</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            <td><input type="checkbox" class="itemCheckbox" data-code="@item.Id" name="selectedItems" value="@item.Id" /></td>
-                                            <td>@item.ProductName</td>
-                                            <td>@item.Vendor</td>
-                                            <td>@item.Price</td>
-                                            <td>@item.Volume</td>
-                                        </tr>
-                                    }
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <!-- END COLUMN FILTER DATA TABLE -->
+        <div class="panel panel-transparent">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    Beverage Inventories
                 </div>
+                <div class="clearfix"></div>
             </div>
+            @using (Html.BeginForm("BeverageInventories", "WebApp", FormMethod.Post, new { @id = "frm" }))
+            {
+                <div class="row">
+                    <div class="col-md-12" style="margin-top: 20px;">
+                        <!-- COLUMN FILTER DATA TABLE -->
+                        <div class="widget widget-table">
+                            <div class="widget-content">
+                                <table id="datatable-column-filter" class="table table-sorting table-striped table-hover datatable">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 15px;"></th>
+                                            <th>ProductName</th>
+                                            <th>Vendor</th>
+                                            @*<th>Producer</th>*@
+                                            <th>Cost</th>
+                                            @*<th>Age</th>*@
+                                            <th>Unit Of Measurment</th>
+                                            @*<th>DrinkType</th>*@
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td><input type="checkbox" class="itemCheckbox" data-code="@item.Id" name="selectedItems" value="@item.Id" /></td>
+                                                <td>@item.ProductName</td>
+                                                <td>@item.Vendor</td>
+                                                @*<td>@item.Producer</td>*@
+                                                <td>@item.Price</td>
+                                                @*<td>@item.Age</td>*@
+                                                <td>@item.Volume</td>
+                                                @*<td>@item.DrinkType</td>*@
+                                            </tr>
+                                        }
 
-            <div class="row" style="margin-left: 5px;">
-                <a type="button" class="btn btn-default" href="/WebApp/AddInventory">Add</a>
-                <input type="button" class="btn btn-default" value="Delete" id="delete_customer" />
-                <input type="button" class="btn btn-default" value="Save" />
-            </div>
-        }
-    </div>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- END COLUMN FILTER DATA TABLE -->
+                    </div>
+                </div>
+
+                <div class="row" style="margin-left: 5px;">
+                    <a type="button" class="btn btn-default" href="#" id="add_inventories">Add</a>
+                    <input type="button" class="btn btn-default" value="Delete" id="delete_inventories" />
+                    <input type="button" class="btn btn-default" value="Edit" id="edit_inventories" />
+                </div>
+            }
+        </div>
             <!-- END PANEL -->
-}
-else
-{
-    <h2> Logged off and now in the other view</h2>
-}
+    }
+    else
+    {
+        <h2> Logged off and now in the other view</h2>
+    }
 
-<script>
+    <script>
     $(function () {
-        addColumnFiltersDataTable(12, 1);
+        addColumnFiltersDataTable("#datatable-column-filter", 5, 1);
         $('.row-filter th:first').empty().append('<input type="checkbox" id="check_all" />');
         $('th:first').attr("class", "");
     });
@@ -98,7 +104,7 @@ else
 
 
             $.ajax({
-                url: '/WebApp/DeleteInventory',
+                url: '/WebApp/DeleteBeverageInventory',
                 data: { "customerCodesList": customerCodesList },
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
@@ -117,6 +123,6 @@ else
         }
 
     });
-</script>
+    </script>
 
 
