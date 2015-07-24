@@ -106,23 +106,208 @@
             $.ajax({
                 cache: false,
                 type: "delete",
-                url: '/api/inventories/delete?ids='+customerCodesList.join(','),
+                url: '/api/inventories/delete?ids=' + customerCodesList.join(','),
                 contentType: 'application/json; charset=utf-8',
-                complete: function () {
+                complete: function() {
+                    window.location.reload();
 
 
                 },
                 success: function (data) {
-                    window.location.reload();
+                    console.log(data);
 
                 },
-                error: function (error) {
+                error: function(error) {
+                    console.log(error);
                 }
             });
         }
 
     });
 
+
+    /*---------------- Add Inventories ---------------------*/
+    $('#add_inventories').on('click', function () {
+        addInventoriesW();
+    });
+    var addInventoriesW = function () {
+        var html =
+            '<div class="row">' +
+        '<div class="col-sm-12">' +
+            '<div class="form-group form-group-default">' +
+                '<label for="ProductName">ProductName</label>' +
+                '<input class="form-control" id="ProductName" name="ProductName" placeholder="Name of your product" required="required" type="text" value="">' +
+                '<span class="field-validation-valid" data-valmsg-for="ProductName" data-valmsg-replace="true"></span>' +
+           ' </div>' +
+        '</div>' +
+    '</div>' +
+    '<div class="row">' +
+        '<div class="col-sm-12">' +
+            '<div class="form-group form-group-default">' +
+                '<label for="Vendor">Vendor</label>' +
+                '<input class="form-control" id="Vendor" name="Vendor" placeholder="Vendor Name" required="required" type="text" value="">' +
+                '<span class="field-validation-valid" data-valmsg-for="Vendor" data-valmsg-replace="true"></span>' +
+            '</div>' +
+        '</div>' +
+    '</div>' +
+    '<div class="row">' +
+        '<div class="col-sm-6">' +
+           ' <div class="form-group form-group-default">' +
+                '<label for="Price">Price</label>' +
+                '<input class="form-control" data-val="true" data-val-number="The field Price must be a number." data-val-required="The Price field is required." id="Price" name="Price" placeholder="Your price" required="required" type="text" value="0">' +
+                '<span class="field-validation-valid" data-valmsg-for="Price" data-valmsg-replace="true"></span>' +
+            '</div>' +
+        '</div>' +
+        '<div class="col-sm-6">' +
+            '<div class="form-group form-group-default">' +
+                '<label for="Volume">Unit Of Measurment</label>' +
+                '<select id="Volume" class="form-control" ><option value="Liter">Liter</option><option value="Oz">Oz</option><option value="Glass">Glass</option></select>' +
+                '<span class="field-validation-valid" data-valmsg-for="Volume" data-valmsg-replace="true"></span>' +
+            '</div>' +
+        '</div>' +
+    '</div>';
+        bootbox.dialog({
+            title: "Add",
+            message: html,
+            buttons: {
+                success: {
+                    label: "Save",
+                    className: "btn-success",
+                    callback: function () {
+                        var model = {
+                            ProductName: $('#ProductName').val(),
+                            Vendor: $('#Vendor').val(),
+                            Price: $('#Price').val(),
+                            UnitOfMeasurment: $('#Volume').val(),
+                        };
+                        addInventories(model);
+                    }
+                }
+            }
+        });
+    };
+
+
+    var addInventories = function (model) {
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: '/api/inventories/add',
+            data: JSON.stringify(model),
+            contentType: 'application/json; charset=utf-8',
+            complete: function () {
+
+
+            },
+            success: function (data) {
+                window.location.reload();
+
+            },
+            error: function (error) {
+            }
+        });
+    }
+
+
+
+    /*------------------------ Edit Inventories--------------------------*/
+    $("#edit_inventories").on("click", function () {
+        var id = $('.itemCheckbox:checked:first').val();
+        editInventory(id);
+    });
+
+    var editInventory = function (id) {
+        $.ajax({
+            type: "GET",
+            url: '/api/inventories/get?id=' + id,
+            contentType: 'application/json; charset=utf-8',
+            complete: function () {
+
+
+            },
+            success: function (data) {
+                editInventoryPopup(data);
+            },
+            error: function (error) {
+            }
+        });
+    };
+
+
+    var editInventoryPopup = function (data) {
+        var html =
+            '<div class="row">' +
+        '<div class="col-sm-12">' +
+            '<div class="form-group form-group-default">' +
+                '<label for="ProductName">ProductName</label>' +
+                '<input class="form-control" id="ProductName" name="ProductName" placeholder="Name of your product" required="required" type="text" value="' + data.ProductName + '">' +
+                '<span class="field-validation-valid" data-valmsg-for="ProductName" data-valmsg-replace="true"></span>' +
+           ' </div>' +
+        '</div>' +
+    '</div>' +
+    '<div class="row">' +
+        '<div class="col-sm-12">' +
+            '<div class="form-group form-group-default">' +
+                '<label for="Vendor">Vendor</label>' +
+                '<input class="form-control" id="Vendor" name="Vendor" placeholder="Vendor Name" required="required" type="text" value="' + data.Vendor + '">' +
+                '<span class="field-validation-valid" data-valmsg-for="Vendor" data-valmsg-replace="true"></span>' +
+            '</div>' +
+        '</div>' +
+    '</div>' +
+    '<div class="row">' +
+        '<div class="col-sm-6">' +
+           ' <div class="form-group form-group-default">' +
+                '<label for="Price">Price</label>' +
+                '<input class="form-control" data-val="true" data-val-number="The field Price must be a number." data-val-required="The Price field is required." id="Price" name="Price" placeholder="Your price" required="required" type="text" value="' + data.Price + '">' +
+                '<span class="field-validation-valid" data-valmsg-for="Price" data-valmsg-replace="true"></span>' +
+            '</div>' +
+        '</div>' +
+        '<div class="col-sm-6">' +
+            '<div class="form-group form-group-default">' +
+                '<label for="Volume">Unit Of Measurment</label>' +
+                '<select id="Volume" class="form-control" ><option value="' + data.UnitOfMeasurment + '" selected>' + data.UnitOfMeasurment + '</option><option value="Liter">Liter</option><option value="Oz">Oz</option><option value="Glass">Glass</option></select>' +
+                '<span class="field-validation-valid" data-valmsg-for="Volume" data-valmsg-replace="true"></span>' +
+            '</div>' +
+        '</div>' +
+    '</div>';
+        bootbox.dialog({
+            title: "Edit",
+            message: html,
+            buttons: {
+                success: {
+                    label: "Save",
+                    className: "btn-success",
+                    callback: function () {
+                        data.ProductName = $('#ProductName').val();
+                        data.Vendor = $('#Vendor').val();
+                        data.Price = $('#Price').val();
+                        data.UnitOfMeasurment = $('#Volume').val();
+
+                        updateInventory(data);
+                    }
+                }
+            }
+        });
+    };
+
+
+    var updateInventory = function (data) {
+        $.ajax({
+            type: "POST",
+            url: '/api/inventories/put',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            complete: function () {
+
+
+            },
+            success: function (data) {
+                editInventoryPopup(data);
+            },
+            error: function (error) {
+            }
+        });
+    };
 
     </script>
 

@@ -9,15 +9,15 @@ namespace SITech.Models
 {
     public class InventoryRepository : IDataRepository<InventoryViewModel>
     {
-        private ApplicationDbContext db;
+        private ApplicationDbContext _db;
 
         public InventoryRepository(ApplicationDbContext context)
         {
-            this.db = context;
+            this._db = context;
         }
         public IEnumerable<InventoryViewModel> GetAll()
         {
-            return db.Inventories.Select(n=> new InventoryViewModel()
+            return _db.Inventories.Select(n=> new InventoryViewModel()
             {
                 Id = n.Id,
                 Price = n.Price,
@@ -31,7 +31,7 @@ namespace SITech.Models
         public IEnumerable<InventoryViewModel> GetAll(int menuItemId)
         {
             List<InventoryViewModel> inventoryViewModels = new List<InventoryViewModel>();
-            foreach (var inv in db.Inventories)
+            foreach (var inv in _db.Inventories)
             {
                 inventoryViewModels.Add(new InventoryViewModel
                 {
@@ -48,7 +48,7 @@ namespace SITech.Models
         public List<InventoryViewModel> GetAllById(int id)
         {
             var inventoryViewModels = new List<InventoryViewModel>();
-            foreach (var inv in db.Inventories.Where(item => item.Id == id))
+            foreach (var inv in _db.Inventories.Where(item => item.Id == id))
             {
                 inventoryViewModels.Add(new InventoryViewModel
                 {
@@ -64,7 +64,7 @@ namespace SITech.Models
 
         public InventoryViewModel Get(int id)
     {
-        var inv = db.Inventories.FirstOrDefault(item => item.Id == id);
+        var inv = _db.Inventories.FirstOrDefault(item => item.Id == id);
             if(inv != null)
             {
                 return new InventoryViewModel
@@ -87,24 +87,32 @@ namespace SITech.Models
             inv.UnitOfMeasurment = model.UnitOfMeasurment;
             inv.Vendor = model.Vendor;
 
-            db.Inventories.Add(inv);
-            db.SaveChanges();
+            _db.Inventories.Add(inv);
+            _db.SaveChanges();
         }
 
         public void Update(InventoryViewModel rate)
-    {
-        db.Entry(rate).State = EntityState.Modified;
+        {
+            var model = new Inventory()
+            {
+                Id = rate.Id,
+                Price = rate.Price,
+                ProductName = rate.ProductName,
+                UnitOfMeasurment = rate.UnitOfMeasurment,
+                Vendor = rate.Vendor
+            };
+            _db.Entry(model).State = EntityState.Modified;
 
-            db.SaveChanges();
+            _db.SaveChanges();
         }
  
     public void Delete(int id)
     {
-        Inventory rate = db.Inventories.Find(id);
+        Inventory rate = _db.Inventories.Find(id);
             if (rate != null)
             {
-                db.Inventories.Remove(rate);
-                db.SaveChanges();
+                _db.Inventories.Remove(rate);
+                _db.SaveChanges();
             }
         }
 

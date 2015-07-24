@@ -94,19 +94,18 @@ else
             return false;
         }
     });
-    /*--------------------------- Delete customer account ----------------------------------------*/
-    $("body").on("click", "#delete_customer", function () {
+    /*--------------------------- Delete Item ----------------------------------------*/
+    $("body").on("click", "#delete_beverageInventories", function () {
         if (confirm("Are you sure?")) {
-            var customerCodesList = [];
+            var ids = [];
             $(".itemCheckbox:checked").each(function () {
-                customerCodesList.push(this.value);
+                ids.push(this.value);
             });
 
 
             $.ajax({
-                url: '/WebApp/DeleteBeverageInventory',
-                data: { "customerCodesList": customerCodesList },
-                type: 'POST',
+                url: '/api/beverageInventories/delete?ids='+ids.join(','),
+                type: 'delete',
                 contentType: 'application/json; charset=utf-8',
                 complete: function () {
 

@@ -70,7 +70,7 @@ namespace SITech.ApiControllers
         {
             try
             {
-                foreach (var id in ids.Split())
+                foreach (var id in ids.Split(','))
                 {
                     _unitOfWork.BeverageInventories.Delete(Int32.Parse(id));
                 }
