@@ -12,9 +12,9 @@ namespace SITech.Models
         private ApplicationDbContext db;
 
         public MenuItemRepository(ApplicationDbContext context)
-    {
-        this.db = context;
-    }
+        {
+            this.db = context;
+        }
 
         public IEnumerable<MenuItemViewModel> GetAll()
         {
@@ -38,26 +38,29 @@ namespace SITech.Models
             return MenuItemViewModels;
         }
 
-        public IEnumerable<MenuItemViewModel> GetByItemType(string itemType, bool isActive = true, string customerId = null)
+        public IEnumerable<MenuItemViewModel> GetByItemType(string itemType, bool isActive = true,
+            string customerId = null)
         {
             var menuItemViewModels = new List<MenuItemViewModel>();
             if (customerId != null)
             {
                 menuItemViewModels =
-                    db.MenuItems.Where(item => item.IsActive == isActive && item.ItemType == itemType && item.CustomerId == customerId).Select(n =>
-                        new MenuItemViewModel
-                        {
-                            MenuItemId = n.MenuItemId,
-                            CustomerId = n.CustomerId,
-                            ItemName = n.ItemName,
-                            ItemPrice = n.ItemPrice,
-                            ItemType = n.ItemType,
-                            MenuPrice = n.MenuPrice,
-                            Profit = n.Profit,
-                            IsActive = n.IsActive,
-                            BeverageIds = n.BeverageIds,
-                            InventoryIds = n.InventoryIds
-                        }).ToList();
+                    db.MenuItems.Where(
+                        item => item.IsActive == isActive && item.ItemType == itemType && item.CustomerId == customerId)
+                        .Select(n =>
+                            new MenuItemViewModel
+                            {
+                                MenuItemId = n.MenuItemId,
+                                CustomerId = n.CustomerId,
+                                ItemName = n.ItemName,
+                                ItemPrice = n.ItemPrice,
+                                ItemType = n.ItemType,
+                                MenuPrice = n.MenuPrice,
+                                Profit = n.Profit,
+                                IsActive = n.IsActive,
+                                BeverageIds = n.BeverageIds,
+                                InventoryIds = n.InventoryIds
+                            }).ToList();
             }
             else
             {
@@ -105,7 +108,9 @@ namespace SITech.Models
         public IEnumerable<MenuItemViewModel> GetAll(string customerId)
         {
             var menuItemViewModels = new List<MenuItemViewModel>();
-            foreach (var inv in db.MenuItems.Where(item => customerId != null && (item.IsActive && item.CustomerId == customerId)))
+            foreach (
+                var inv in
+                    db.MenuItems.Where(item => customerId != null && (item.IsActive && item.CustomerId == customerId)))
             {
                 menuItemViewModels.Add(new MenuItemViewModel
                 {
@@ -127,7 +132,10 @@ namespace SITech.Models
         public IEnumerable<MenuItemViewModel> GetAllUnactive(string customerId)
         {
             var MenuItemViewModels = new List<MenuItemViewModel>();
-            foreach (var inv in db.MenuItems.Where(item => customerId != null && (item.IsActive == false && item.CustomerId == customerId)))
+            foreach (
+                var inv in
+                    db.MenuItems.Where(
+                        item => customerId != null && (item.IsActive == false && item.CustomerId == customerId)))
             {
                 MenuItemViewModels.Add(new MenuItemViewModel
                 {
@@ -145,11 +153,11 @@ namespace SITech.Models
             }
             return MenuItemViewModels;
         }
-        
+
         public MenuItemViewModel Get(int id)
-    {
-        var inv = db.MenuItems.FirstOrDefault(item => item.MenuItemId == id);
-            if(inv != null)
+        {
+            var inv = db.MenuItems.FirstOrDefault(item => item.MenuItemId == id);
+            if (inv != null)
             {
                 return new MenuItemViewModel
                 {
@@ -166,10 +174,15 @@ namespace SITech.Models
                 };
             }
             return null;
-    }
+        }
+
+        public MenuItem GetById(int id)
+        {
+            return db.MenuItems.FirstOrDefault(item => item.MenuItemId == id);
+        }
 
         public void Create(MenuItemViewModel model)
-    {
+        {
             MenuItem inv = new MenuItem
             {
                 MenuItemId = model.MenuItemId,
@@ -209,6 +222,13 @@ namespace SITech.Models
             db.SaveChanges();
         }
 
+        public void Update(MenuItem model)
+        {
+            db.Entry(model).State = EntityState.Modified;
+
+            db.SaveChanges();
+        }
+
         public void Activate(int Id)
         {
             var menuItem = db.MenuItems.FirstOrDefault(item => item.MenuItemId == Id);
@@ -244,6 +264,5 @@ namespace SITech.Models
                 db.SaveChanges();
             }
         }
-
     }
 }

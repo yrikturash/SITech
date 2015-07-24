@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Web.Http;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using SITech.DTO;
 using SITech.Models;
@@ -75,16 +76,33 @@ namespace SITech.ApiControllers
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("getEditData")]
-        public HttpResponseMessage GetEditData([FromUri] List<int> beverageIds = null, [FromUri] List<int> inventoryIds = null )
+        public HttpResponseMessage GetEditData(string beverageIds = null, [FromUri] string inventoryIds = null )
         {
             try
             {
                 List<BeverageInventory> beverageList = new List<BeverageInventory>();
-                beverageIds?.ForEach(id => beverageList.Add(_unitOfWork.BeverageInventories.GetById(id)));
+                if (beverageIds != null)
+                {
+                    beverageIds = beverageIds[beverageIds.Length - 1] == ','
+                        ? beverageIds.Remove(beverageIds.Length - 1)
+                        : beverageIds;
+                    foreach (var id in beverageIds.Split(','))
+                    {
+                        beverageList.Add(_unitOfWork.BeverageInventories.GetById(Int32.Parse(id)));
+                    }
+                }
 
-                List<BeverageInventory> inventoryList = new List<BeverageInventory>();
-                inventoryIds?.ForEach(id => inventoryList.Add(_unitOfWork.BeverageInventories.GetById(id)));
-
+                List<Inventory> inventoryList = new List<Inventory>();
+                if (inventoryIds != null)
+                {
+                    inventoryIds = inventoryIds[inventoryIds.Length - 1] == ','
+                        ? inventoryIds.Remove(inventoryIds.Length - 1)
+                        : inventoryIds;
+                    foreach (var id in inventoryIds.Split(','))
+                    {
+                        inventoryList.Add(_unitOfWork.Inventories.GetById(Int32.Parse(id)));
+                    }
+                }
 
 
                 return Request.CreateResponse(HttpStatusCode.OK, new {InventoryList = inventoryList, BeverageList = beverageList});

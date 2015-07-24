@@ -364,15 +364,53 @@ var editMenuItem = function (id) {
 
         },
         success: function (data) {
+            //todo: for inventory too
+            console.log('==========');
             console.log(data.BeverageIds);
-            data.BeverageIds = (data.BeverageIds[data.BeverageIds.length - 1] === ',') ? data.BeverageIds.slice(0, -1) : data.BeverageIds;
-            var beverageIdsStr = data.BeverageIds.split(',').join('&beverageIds=');
-            console.log(beverageIdsStr);
+            console.log(data.InventoryIds);
+            console.log('=======');
 
+            var separator = '?';
+            //var beverageIdsStr = "";
+            //if (data.BeverageIds !== null && data.BeverageIds !== undefined && data.BeverageIds.length > 0) {
+            //    data.BeverageIds = (data.BeverageIds[data.BeverageIds.length - 1] === ',') ? data.BeverageIds.slice(0, -1) : data.BeverageIds;
+            //    beverageIdsStr = data.BeverageIds.split(',').join('&beverageIds=');
+            //    beverageIdsStr = "?beverageIds=" + beverageIdsStr;
+            //    separator = '&';
+            //}
+            var inventoryIdsStr = "";
+            //if (data.InventoryIds !== null && data.InventoryIds !== undefined && data.InventoryIds.length > 0) {
+            //    data.InventoryIds = (data.InventoryIds[data.InventoryIds.length - 1] === ',') ? data.InventoryIds.slice(0, -1) : data.InventoryIds;
+            //    inventoryIdsStr = data.InventoryIds.split(',').join('&inventoryIds=');
+
+            //    inventoryIdsStr = (inventoryIdsStr[inventoryIdsStr.length - 1] === '&') ? inventoryIdsStr.slice(0, -1) : inventoryIdsStr;
+
+            //    inventoryIdsStr = separator+"inventoryIds=" + inventoryIdsStr;
+
+
+            //}
+            
+
+            //console.log('==========');
+            //console.log(beverageIdsStr);
+            //console.log(inventoryIdsStr);
+            //console.log('=======');
+
+            var invStr = "";
+            var bStr = "";
+            if (data.BeverageIds !== null && data.BeverageIds !== undefined && data.BeverageIds.length > 0) {
+                bStr = '?BeverageIds=' + data.BeverageIds;
+                separator = '&';
+
+            }
+            if (data.InventoryIds !== null && data.InventoryIds !== undefined && data.InventoryIds.length > 0) {
+                invStr = "InventoryIds=" + data.InventoryIds;
+                invStr = separator+invStr;
+            }
             $.ajax({
                 cache: false,
                 type: "GET",
-                url: '/api/pushups/getEditData?beverageIds=' + beverageIdsStr,
+                url: '/api/pushups/getEditData' + bStr + invStr,
                 contentType: 'application/json; charset=utf-8',
                 complete: function () {
 
@@ -381,7 +419,11 @@ var editMenuItem = function (id) {
                 success: function (data2) {
                     data.InventoryList = data2.InventoryList;
                     data.BeverageList = data2.BeverageList;
+                    console.log('==========');
+
                     console.log(data);
+                    console.log('==========');
+
                     editMenuItemPopup(data);
                 },
                 error: function (error) {
@@ -395,46 +437,70 @@ var editMenuItem = function (id) {
 
 var editMenuItemPopup = function (data) {
     var options = "";
-    for (var i = 0; i < data.BeverageList.length; i++) {
-        options += '<tr>' +
-            '<td><input type="checkbox" class="editItemCheckbox" name="selectedItems" data-type="0" value="' + data.BeverageList[i].Id + '" /></td>' +
-            '<td>' + data.BeverageList[i].ProductName + '</td>' +
-            '<td>' + data.BeverageList[i].Price + '</td>' +
-            '<td>' + data.BeverageList[i].Price + '</td>' +
-            '<td>' + data.BeverageList[i].UnitOfMeasurment + '</td>' +
-            '</tr>';
+    var table = "";
+    var deleteTableItemBtn = "";
 
+    //console.log(data.BeverageList);
+    //if exist list for table
+    if (data.BeverageList !== null && data.BeverageList !== undefined && data.BeverageList.length > 0) {
+        for (var i = 0; i < data.BeverageList.length; i++) {
+            options += '<tr>' +
+                '<td><input type="checkbox" class="editItemCheckbox" name="selectedItems" data-type="0" value="' + data.BeverageList[i].Id + '" /></td>' +
+                '<td>' + data.BeverageList[i].ProductName + '</td>' +
+                '<td>' + data.BeverageList[i].Price + '</td>' +
+                '<td>' + data.BeverageList[i].Price + '</td>' +
+                '<td>' + data.BeverageList[i].UnitOfMeasurment + '</td>' +
+                '</tr>';
+
+        }
+    }
+    if (data.InventoryList !== null && data.InventoryList !== undefined && data.InventoryList.length > 0) {
+        for (var i = 0; i < data.InventoryList.length; i++) {
+            options += '<tr>' +
+                '<td><input type="checkbox" class="editItemCheckbox" name="selectedItems" data-type="1" value="' + data.InventoryList[i].Id + '" /></td>' +
+                '<td>' + data.InventoryList[i].ProductName + '</td>' +
+                '<td>' + data.InventoryList[i].Price + '</td>' +
+                '<td>' + data.InventoryList[i].Price + '</td>' +
+                '<td>' + data.InventoryList[i].UnitOfMeasurment + '</td>' +
+                '</tr>';
+
+        }
+    }
+    if ((data.BeverageList !== null && data.BeverageList !== undefined && data.BeverageList.length > 0) ||
+        (data.InventoryList !== null && data.InventoryList !== undefined && data.InventoryList.length > 0)) {
+
+        table =
+        '<div class="row">' +
+        '<div class="col-md-12" style="margin-top: 20px;">' +
+            '<div class="widget widget-table">' +
+                '<div class="widget-content" style="max-height: 300px !important; overflow-y:scroll; margin-bottom:10px;">' +
+                    '<table id="datatable-column-filter" class="table table-sorting table-striped table-hover datatable">' +
+                        '<thead>' +
+                            '<tr>' +
+                                '<th style="width: 15px;"></th>' +
+                                '<th>Item Name</th>' +
+                                '<th>Cost Price</th>' +
+                                '<th>Amount</th>' +
+                                '<th>Measurement</th>' +
+                            '</tr>' +
+                        '</thead>' +
+                        '<tbody>' +
+                                options +
+                        '</tbody>' +
+                    '</table>' +
+                '</div>' +
+            '</div>' +
+        '</div>' +
+    '</div>';
+
+        deleteTableItemBtn = '<input type="button" class="btn btn-default" value="Delete Item" id="deleteBeverageInventory">';
     }
 
 
-    var table = 
-    '<div class="row">'+
-    '<div class="col-md-12" style="margin-top: 20px;">'+
-        '<div class="widget widget-table">'+
-            '<div class="widget-content">'+
-                '<table id="datatable-column-filter" class="table table-sorting table-striped table-hover datatable">'+
-                    '<thead>'+
-                        '<tr>'+
-                            '<th style="width: 15px;"></th>'+
-                            '<th>Item Name</th>'+
-                            '<th>Cost Price</th>'+
-                            '<th>Amount</th>'+
-                            '<th>Measurement</th>'+
-                        '</tr>'+
-                    '</thead>'+
-                    '<tbody>'+
-                            options +
-                    '</tbody>'+
-                '</table>'+
-            '</div>'+
-        '</div>'+
-    '</div>'+
-'</div>';
-
     var btnRow =
         '<div class="row">' +
-            '<input type="button" class="btn btn-default" value="Delete Item" id="deleteBeverageInventory">' +
-            '<input type="button" class="btn btn-default" style="margin-left:20px;" value="Add New Item to ' + data.ItemName + '" id="add_new_item">' +
+            deleteTableItemBtn +
+            '<input type="button" class="btn btn-default" style="margin-left:20px;" value="Add New Item to ' + data.ItemName + '" id="addBeverageInventory">' +
         '</div>';
 
     bootbox.dialog({
@@ -447,14 +513,14 @@ var editMenuItemPopup = function (data) {
             '<div class="form-group"> ' +
                 '<label class="col-md-4 control-label" for="menu_price">Menu Price of ' + data.ItemName + ': </label> ' +
                 '<div class="col-md-4"> ' +
-                    '<input id="menu_price" name="menu_price" type="number" value="' + data.MenuPrice + '" />' +
+                    '<input id="menu_price"class="form-control" name="menu_price" type="number" value="' + data.MenuPrice + '" />' +
                 '</div>' +
             '</div>' +
             '<div class="clearfix"></div>' +
             '<div class="form-group"> ' +
                 '<label class="col-md-4 control-label" for="profit">% profit you are making: </label> ' +
                 '<div class="col-md-4"> ' +
-                    '<input id="profit" name="profit" type="number"  min="0" max="100"  value="' + data.Profit + '" />' +
+                    '<input id="profit" class="form-control" name="profit" type="number"  min="0" max="100"  value="' + data.Profit + '" />' +
                 '</div>' +
             '</div> ' +
             '</form> </div>  </div>',
@@ -516,7 +582,7 @@ $('body').on('click', '#deleteBeverageInventory', function () {
         $.ajax({
             cache: false,
             type: "delete",
-            url: '/api/deleteBeverageId/delete?id=' + id + '&menuItemId=' + menuItemId,
+            url: '/api/menuitem/deleteBeverageId?id=' + id + '&menuItemId=' + menuItemId,
             contentType: 'application/json; charset=utf-8',
             complete: function () {
 
@@ -545,7 +611,7 @@ $('body').on('click', '#deleteBeverageInventory', function () {
         $.ajax({
             cache: false,
             type: "delete",
-            url: '/api/deleteInventoryId/delete?id=' + id + '&menuItemId=' + menuItemId,
+            url: '/api/menuitem/deleteInventoryId?id=' + id + '&menuItemId=' + menuItemId,
             contentType: 'application/json; charset=utf-8',
             complete: function () {
 
@@ -559,8 +625,91 @@ $('body').on('click', '#deleteBeverageInventory', function () {
     }
 });
 
+//---------------------- addBeverageInventory ------------------------------//
+$('body').on('click', '#addBeverageInventory', function () {
+    $.ajax({
+        cache: false,
+        type: "get",
+        url: '/api/pushups/getdata',
+        contentType: 'application/json; charset=utf-8',
+        complete: function () {
 
-/*---------------- Add BeverageInventories ----------*-----------*/
+        },
+        success: function (data) {
+            addBeverageInventoryPopup(data);
+
+        },
+        error: function (error) {
+        }
+    });
+});
+var addBeverageInventoryPopup = function (data) {
+    var options = "";
+    for (var i = 0; i < data.BeverageList.length; i++) {
+        options += '<option data-type="0" value="' + data.BeverageList[i].Id + '">' + data.BeverageList[i].ProductName + '</option>';
+    }
+    for (var i = 0; i < data.InventoryList.length; i++) {
+        options += '<option data-type="1" value="' + data.InventoryList[i].Id + '">' + data.InventoryList[i].ProductName + '</option>';
+    }
+
+    var html =
+'<div class="row">' +
+    '<div class="col-md-12">' +
+        '<div class="form-group form-group-default">' +
+            '<select id="newBeverageInventory" class="form-control" >' + options + '</select>' +
+        '</div>' +
+    '</div>' +
+'</div>';
+    bootbox.dialog({
+        title: "Add",
+        message: html,
+        buttons: {
+            success: {
+                label: "Save",
+                className: "btn-success",
+                callback: function () {
+                    var id = $('#newBeverageInventory').val();
+                    var menuItemId = $('.itemCheckbox:checked:first').val();
+                    if ($('#newBeverageInventory option:checked').data('type') === 0) {
+                        $.ajax({
+                            cache: false,
+                            type: "put",
+                            url: '/api/menuitem/addBeverageId?menuItemId=' + menuItemId + "&id=" + id,
+                            contentType: 'application/json; charset=utf-8',
+                            complete: function() {
+
+                            },
+                            success: function(data) {
+                                location.reload();
+                            },
+                            error: function(error) {
+                            }
+                        });
+                    } else {
+                        $.ajax({
+                            cache: false,
+                            type: "put",
+                            url: '/api/menuitem/addInventoryId?menuItemId=' + menuItemId + "&id=" + id,
+                            contentType: 'application/json; charset=utf-8',
+                            complete: function() {
+
+                            },
+                            success: function(data) {
+                                location.reload();
+                            },
+                            error: function(error) {
+                            }
+                        });
+                    }
+
+                }
+            }
+        }
+    });
+};
+
+
+/*---------------- Add BeverageInventories ---------------------*/
 $('#add_beverageInventories').on('click', function() {
     addBeverageInventoriesW();
 });
