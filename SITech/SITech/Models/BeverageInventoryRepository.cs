@@ -1,6 +1,7 @@
 ﻿using SITech.DTO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
@@ -93,7 +94,16 @@ namespace SITech.Models
 
         public void Update(BeverageInventoryViewModel rate)
         {
-            _db.Entry(rate).State = EntityState.Modified;
+            var model = new BeverageInventory()
+            {
+                Id = rate.Id,
+                Age = rate.Age,
+                Price = rate.Price,
+                ProductName = rate.ProductName,
+                UnitOfMeasurment = rate.UnitOfMeasurment,
+                Vendor = rate.Vendor
+            };
+            _db.Entry(model).State = EntityState.Modified;
 
             _db.SaveChanges();
         }

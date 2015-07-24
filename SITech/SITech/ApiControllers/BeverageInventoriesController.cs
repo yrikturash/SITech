@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.UI;
 using SITech.DTO;
 using SITech.Models;
 
@@ -34,14 +35,13 @@ namespace SITech.ApiControllers
             }
         }
 
-        [System.Web.Http.HttpPost]
+        [System.Web.Http.HttpGet]
         [System.Web.Http.Route("get")]
         public HttpResponseMessage GetBeverageInventoryById(int id)
         {
             try
             {
-                
-                return Request.CreateResponse(HttpStatusCode.OK, _unitOfWork.BeverageInventories.GetById(id));
+                return Request.CreateResponse(HttpStatusCode.OK, _unitOfWork.BeverageInventories.Get(id));
             }
             catch (Exception ex)
             {
@@ -74,6 +74,21 @@ namespace SITech.ApiControllers
                 {
                     _unitOfWork.BeverageInventories.Delete(Int32.Parse(id));
                 }
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("put")]
+        public HttpResponseMessage Update([FromBody] BeverageInventoryViewModel model)
+        {
+            try
+            {
+                _unitOfWork.BeverageInventories.Update(model);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception ex)
