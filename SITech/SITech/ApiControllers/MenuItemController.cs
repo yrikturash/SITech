@@ -130,5 +130,41 @@ namespace SITech.ApiControllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
+
+        [HttpPut]
+        [System.Web.Http.Route("deleteBeverageId")]
+        public HttpResponseMessage DeleteBeveregeId(int menuItemId, string id)
+        {
+            try
+            {
+                var model = _unitOfWork.MenuItems.Get(menuItemId);
+                model.BeverageIds.Replace(id + ",", string.Empty);
+                _unitOfWork.MenuItems.Update(model);
+                return Request.CreateResponse(HttpStatusCode.OK);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+        [HttpPut]
+        [System.Web.Http.Route("deleteInventoryId")]
+        public HttpResponseMessage DeleteInventoryId(int menuItemId, string id)
+        {
+            try
+            {
+                var model = _unitOfWork.MenuItems.Get(menuItemId);
+                model.InventoryIds.Replace(id + ",", string.Empty);
+                _unitOfWork.MenuItems.Update(model);
+                return Request.CreateResponse(HttpStatusCode.OK);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
     }
 }

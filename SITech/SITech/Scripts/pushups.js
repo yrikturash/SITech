@@ -405,7 +405,6 @@ var editMenuItemPopup = function (data) {
             '</tr>';
 
     }
-    console.log(options);
 
 
     var table = 
@@ -434,7 +433,7 @@ var editMenuItemPopup = function (data) {
 
     var btnRow =
         '<div class="row">' +
-            '<input type="button" class="btn btn-default" value="Delete Item" id="delete_item">' +
+            '<input type="button" class="btn btn-default" value="Delete Item" id="deleteBeverageInventory">' +
             '<input type="button" class="btn btn-default" style="margin-left:20px;" value="Add New Item to ' + data.ItemName + '" id="add_new_item">' +
         '</div>';
 
@@ -491,37 +490,68 @@ var updateMenuItem = function (item) {
     });
 };
 
-//todo: delete baverege or inventory item on edit menuitem popup
-$('#delete_btn').on('click', function() {
-    var id = $('.editItemCheckbox:selected:first').val();
-    var type = $('.editItemCheckbox:selected:first').data('type');
+//----------- delete baverege or inventory item on edit menuitem popup -------------------------//
+$('body').on('click', '#deleteBeverageInventory', function () {
+    var id = $('.editItemCheckbox:checked:first').val();
+    var menuItemId = $('.itemCheckbox:checked:first').val();
+    var type = $('.editItemCheckbox:checked:first').data('type');
 
-    if (type === 'beverage') {
+    console.log(type);
+
+    if (type === 0) {
+        //$.ajax({
+        //    cache: false,
+        //    type: "delete",
+        //    url: '/api/beverageInventories/delete?id=' + id,
+        //    contentType: 'application/json; charset=utf-8',
+        //    complete: function () {
+
+        //    },
+        //    success: function (data) {
+        //        location.reload();
+        //    },
+        //    error: function (error) {
+        //    }
+        //});
         $.ajax({
             cache: false,
             type: "delete",
-            url: '/api/beverage/delete?id=' + id,
-            contentType: 'application/json; charset=utf-8',
-            complete: function() {
-
-            },
-            success: function(data) {
-                location.reload();
-            },
-            error: function(error) {
-            }
-        });
-    } else {
-        $.ajax({
-            cache: false,
-            type: "delete",
-            url: '/api/inventory/delete?id='+id,
+            url: '/api/deleteBeverageId/delete?id=' + id + '&menuItemId=' + menuItemId,
             contentType: 'application/json; charset=utf-8',
             complete: function () {
 
             },
             success: function (data) {
-                location.reload();
+                $('.editItemCheckbox:checked:first').closest('tr').remove();
+            },
+            error: function (error) {
+            }
+        });
+    } else {
+        //$.ajax({
+        //    cache: false,
+        //    type: "delete",
+        //    url: '/api/inventories/delete?id=' + id,
+        //    contentType: 'application/json; charset=utf-8',
+        //    complete: function () {
+
+        //    },
+        //    success: function (data) {
+        //        location.reload();
+        //    },
+        //    error: function (error) {
+        //    }
+        //});
+        $.ajax({
+            cache: false,
+            type: "delete",
+            url: '/api/deleteInventoryId/delete?id=' + id + '&menuItemId=' + menuItemId,
+            contentType: 'application/json; charset=utf-8',
+            complete: function () {
+
+            },
+            success: function (data) {
+                $('.editItemCheckbox:checked:first').closest('tr').remove();
             },
             error: function (error) {
             }
@@ -656,7 +686,7 @@ var addInventoriesW = function () {
     '<div class="col-sm-6">'+
         '<div class="form-group form-group-default">'+
             '<label for="Volume">Unit Of Measurment</label>'+
-            '<input class="form-control" id="Volume" name="Volume" placeholder="Volume in oz" required="required" type="text" value="">'+
+            '<select id="Volume" class="form-control" ><option value="Liter">Liter</option><option value="Oz">Oz</option><option value="Glass">Glass</option></select>' +
             '<span class="field-validation-valid" data-valmsg-for="Volume" data-valmsg-replace="true"></span>'+
         '</div>'+
     '</div>'+

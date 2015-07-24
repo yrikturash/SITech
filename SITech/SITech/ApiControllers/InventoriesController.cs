@@ -62,6 +62,21 @@ namespace SITech.ApiControllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
+
+        [System.Web.Http.HttpDelete]
+        [System.Web.Http.Route("delete")]
+        public HttpResponseMessage DeleteById(int id)
+        {
+            try
+            {
+                _unitOfWork.Inventories.Delete(id);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
     }
 
 }
