@@ -94,8 +94,8 @@
             return false;
         }
     });
-    /*--------------------------- Delete customer account ----------------------------------------*/
-    $("body").on("click", "#delete_customer", function () {
+        /*--------------------------- Delete Inventories----------------------------------------*/
+    $("body").on("click", "#delete_inventories", function () {
         if (confirm("Are you sure?")) {
             var customerCodesList = [];
             $(".itemCheckbox:checked").each(function () {
@@ -104,25 +104,26 @@
 
 
             $.ajax({
-                url: '/WebApp/DeleteBeverageInventory',
-                data: { "customerCodesList": customerCodesList },
-                type: 'POST',
+                cache: false,
+                type: "delete",
+                url: '/api/inventories/delete?ids='+customerCodesList.join(','),
                 contentType: 'application/json; charset=utf-8',
                 complete: function () {
 
+
                 },
                 success: function (data) {
-                    $(".itemCheckbox:checked").each(function () {
-                        this.closest('tr').remove();
-                    });
+                    window.location.reload();
+
                 },
                 error: function (error) {
-                    Console.log(error);
                 }
             });
         }
 
     });
+
+
     </script>
 
 
